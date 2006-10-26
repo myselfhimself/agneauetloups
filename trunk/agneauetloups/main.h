@@ -2,7 +2,6 @@
 #define MAINH
 
 #include <gtk/gtk.h>
-#include "outils.c"
 
 // Constantes
 
@@ -29,7 +28,7 @@ typedef struct {int position;
 typedef struct {t_lamb lamb;
 		t_wolf wolf[5];
 		int cur_player;
-		bool is_human[2];
+		int is_human[2];
 		}t_data;
 
 typedef struct {int skin;
@@ -45,6 +44,9 @@ typedef struct {int skin;
 
 void IA_lamb(t_tout *tout);
 void IA_wolf(t_tout *tout);
-void next_turn(GtkWiget *emitter,gpointer *event,t_tout *tout);
+void next_turn(GtkWidget *emitter,gpointer *event,t_tout *tout);
+
+#include "outils.c"
+
 			   
 #endif
