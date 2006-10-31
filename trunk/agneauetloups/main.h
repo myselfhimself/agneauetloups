@@ -1,7 +1,7 @@
+#include "projet.h"
+
 #ifndef MAINH
 #define MAINH
-
-#include <gtk/gtk.h>
 
 // Constantes
 
@@ -9,6 +9,12 @@
 #define WOLF 1
 
 // structures
+
+typedef struct {
+	GtkWidget *lastone;
+	}t_movement;
+
+void make_movement(GtkWidget *newone,t_movement *move);
 
 typedef struct {int time;
 		int timemax;
@@ -40,13 +46,6 @@ typedef struct {int skin;
 		       GList *history;
 		       }t_tout;
 
-// Prototypes
-
-void IA_lamb(t_tout *tout);
-void IA_wolf(t_tout *tout);
-void next_turn(GtkWidget *emitter,gpointer *event,t_tout *tout);
-
-#include "outils.c"
 
 			   
 #endif
