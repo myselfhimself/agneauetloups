@@ -1,8 +1,7 @@
+#include "projet.h"
+
 #ifndef OUTILSC
 #define OUTILSC
-
-#include <gtk/gtk.h>
-#include "main.h"
 
 void next_turn(GtkWidget *emitter,gpointer *event,t_tout *tout)
 {

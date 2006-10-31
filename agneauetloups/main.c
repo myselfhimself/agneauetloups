@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <gtk/gtk.h>
-#include "main.h"
-
-typedef struct {GtkWidget *lastone;}t_movement;
-void make_movement(GtkWidget *newone,t_movement *move);
+#include "projet.h"
 
 int main (int argc, char *argv[])
 {
