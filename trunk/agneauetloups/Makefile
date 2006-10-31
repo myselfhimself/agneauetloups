@@ -4,7 +4,7 @@ OPTIONS=`pkg-config --cflags --libs gtk+-2.0` -I.
 jeu.bin : main.o outils.o projet.h
 	$(CC) $(OPTIONS) main.o outils.o -o jeu.bin
 
-main.o : main.c main.h
+main.o : main.c main.h outils.o 
 	$(CC) $(OPTIONS) -c main.c
 
 outils.o: outils.c outils.h main.h
