@@ -57,6 +57,8 @@ typedef struct {/// position et deplacements possibles de l'agneau
 		t_wolf wolf[5];
 		/// index (LAMB ou WOLF) du joueur devant jouer
 		int cur_player;
+		/// index du pion selectionne (-1 si aucun)
+		int cur_pion;
 		/// informations sur les deux joueurs : pour chacun s'il est gere par un utilisateur ou par l'ordinateur
 		int is_human[2];
 		}t_data;
