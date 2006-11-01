@@ -77,25 +77,24 @@ int get_int_index(int integer, int* table, int table_length)
   return (a == table_length) ? -1 : a;
 }
 /// retourne un booleen indiquant si un bouton donne correspond a un pion du joueur dont c'est le tour
-int belongs_to_player(GtkWidget* what, t_tout* tout)
+int belongs_to_player(int button_index, t_tout* tout)
 {
   // resultat
   int result;
   // iterateur
   int a=0;
   // index du bouton donne dans "tout"
-  int button_index = get_button_index(what, tout);
   // selon le role du joueur dont c'est le tour
   switch(tout->cur_player)
   {
     // s'il joue comme un agneau
     case LAMB:
-      // le resultat est la position de l'agneau
-      result = (get_int_index(button_index,tout->data->lamb.poss) != -1);
+      // le resultat est : si oui ou non le bouton donne correspond a la position de l'agneau
+      result = (button_index == tout->data->lamb.position);
       break;
     case WOLF:
-      while(a<5 && (result = get_int_index(button_index,tout->data->wolf[a].poss)) == -1) a++;
-      result = (result != -1);
+      // le resultat est : si oui ou non le bouton donne correspond a la position de l'un ou l'autre loup
+      while(a<5 && !(result = (button_index == tout->data->wolf[a].position))) a++;
       break;
   }
   return result;
@@ -103,8 +102,15 @@ int belongs_to_player(GtkWidget* what, t_tout* tout)
 
 void clicked(GtkWidget *emitter, t_tout* tout)
 {
-  //Si le bouton est un pion du joueur en cours
-  if(emitter
+  int button_index = get_button_index(emitter, tout);
+  // Si le bouton est un pion du joueur en cours
+  if(belongs_to_player(button_index,tout))
+    // selectionner ce pion
+    select_pion(button_index,tout);
+  // Sinon : si un pion est deja selectionne et que le bouton donne appartient aux case possibles de deplacement pour ce pion
+  else if(tout->cur_pion != -1 && get_int_index(button_index,((tout->cur_player == LAMB) ? tout->lamb.poss : tout->wolf[tout->cur_pion].poss))
+    // deplacer le pion selectionne sur notre bouton
+    // emettre next_turn pour changer de tour
 }
 
 void make_movement(GtkWidget *newone,t_movement *move)
