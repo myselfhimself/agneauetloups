@@ -62,8 +62,49 @@ int main (int argc, char *argv[])
   return 0;
 }
 
+/// retourne l'entier correspondant au bouton donne dans le tableau de boutons du jeu
+int get_button_index(GtkWidget* whatButton, t_tout* tout)
+{
+  int a=0;
+  while(tout->button[a] != whatButton) a++;
+  return a;
+}
+/// retourne la position d'un entier dans un tableau d'entier ; -1 si non trouve
+int get_int_index(int integer, int* table, int table_length)
+{
+  int a=0;
+  while(a<table_length && table[a] != integer) a++;
+  return (a == table_length) ? -1 : a;
+}
+/// retourne un booleen indiquant si un bouton donne correspond a un pion du joueur dont c'est le tour
+int belongs_to_player(GtkWidget* what, t_tout* tout)
+{
+  // resultat
+  int result;
+  // iterateur
+  int a=0;
+  // index du bouton donne dans "tout"
+  int button_index = get_button_index(what, tout);
+  // selon le role du joueur dont c'est le tour
+  switch(tout->cur_player)
+  {
+    // s'il joue comme un agneau
+    case LAMB:
+      // le resultat 
+      result = (get_int_index(button_index,tout->data->lamb.poss) != -1);
+      break;
+    case WOLF:
+      while(a<5 && (result = get_int_index(button_index,tout->data->wolf[a].poss)) == -1) a++;
+      result = (result != -1);
+      break;
+  }
+  return result;
+}
+
 void clicked(GtkWidget *emitter, t_tout* tout)
 {
+  //Si le bouton est un pion du joueur en cours
+  if(emitter
 }
 
 void make_movement(GtkWidget *newone,t_movement *move)
