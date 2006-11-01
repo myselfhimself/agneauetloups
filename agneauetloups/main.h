@@ -55,7 +55,7 @@ typedef struct {/// position et deplacements possibles de l'agneau
 		t_lamb lamb;
 		/// position et deplacements possibles des cinq loups
 		t_wolf wolf[5];
-		/// index du joueur devant jouer
+		/// index (LAMB ou WOLF) du joueur devant jouer
 		int cur_player;
 		/// informations sur les deux joueurs : pour chacun s'il est gere par un utilisateur ou par l'ordinateur
 		int is_human[2];
