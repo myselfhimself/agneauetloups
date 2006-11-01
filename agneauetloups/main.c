@@ -90,7 +90,7 @@ int belongs_to_player(GtkWidget* what, t_tout* tout)
   {
     // s'il joue comme un agneau
     case LAMB:
-      // le resultat 
+      // le resultat est la position de l'agneau
       result = (get_int_index(button_index,tout->data->lamb.poss) != -1);
       break;
     case WOLF:
