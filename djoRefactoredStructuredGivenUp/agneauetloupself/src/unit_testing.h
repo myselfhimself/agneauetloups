@@ -1,9 +1,8 @@
 #ifndef UNITTESTH
 #define UNITTESTH
 
-//constantes passables a la fonction UT() pour qu'elle execute un unit_test
-#define SET_PLAYERS 0
-
+//prototypes exceptionnelement pas dans "prototypes.h"
+gboolean UT_set_players(gpointer data);
 
 
 
