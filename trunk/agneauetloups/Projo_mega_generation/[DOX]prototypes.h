@@ -130,7 +130,7 @@ void select(GtkWidget *eventbox,gint R,gint V,gint B);
 void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game);
 
 // #################################################
-// #                                                         dans history.c                                                            #
+// #                 dans history.c                #
 // #################################################
 /** \fn int game_history_add(t_game *game)
 *

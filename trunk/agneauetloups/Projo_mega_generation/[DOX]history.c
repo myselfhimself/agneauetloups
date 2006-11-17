@@ -11,23 +11,21 @@ int game_history_add(t_game *game)
 	/** - stockage de la structure dans un liste\n
 	*/
 	game->data.history = g_list_append (game->data.history,newhistory);
-	/** - enregistrement des paramètresde la partie\n
+	/** - enregistrement des paramètres de la partie\n
 	*/
 	/** -# pour l'agneau\n
+	* -# pour les loups\n
+	* -# pour le joueur en cours\n
 	*/
 	newhistory->lamb.x = game->data.now->lamb.x;
 	newhistory->lamb.y = game->data.now->lamb.y;
-	/** -# pour les loups\n
-	*/
 	for(i=0;i<5;i++)
 	{
 		newhistory->wolf[i].x = game->data.now->wolf[i].x;
 		newhistory->wolf[i].y = game->data.now->wolf[i].y;
 	}
-	/** -# pour le joueur en cours\n
-	*/
 	newhistory->curplayer = game->data.now->curplayer;
-	printf("%d",g_list_length(game->data.history));//sleep(2000);
+	printf("%d",g_list_length(game->data.history));
 	return SUCCESS;
 }
 
@@ -40,33 +38,33 @@ void game_history_back(t_game *game, int back)
 	if(g_list_length(game->data.history) >= back)
 	{
 		/** - si l'agneau a bougé\n
+		* -# détruire l'image sur l'emplacement actuel\n
+		* -# y charger l'image du terrain\n
+		* -# détruire l'image sur le nouvel emplacement\n
+		* -# y charger l'image du terrain\n
+		* -# y superposer l'image de l'agneau\n
 		*/
 		x = ((t_history*)g_list_nth_data(game->data.history, g_list_length(game->data.history)-back))->lamb.x;
 		y = ((t_history*)g_list_nth_data(game->data.history, g_list_length(game->data.history)-back))->lamb.y;
 		if(game->data.now->lamb.x != x || game->data.now->lamb.y != y)
 		{
-			/** -# détruire l'image sur l'emplacement actuel\n
-			*/
 			gtk_container_remove(GTK_CONTAINER(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox),(GtkWidget*)(gtk_container_get_children(GTK_CONTAINER(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox)))->data);
-            /** -# y charger l'image du terrain\n
-			*/
-			sprintf(path,"%s%s",PATH,"Bcase.BMP");
+            sprintf(path,"%s%s",PATH,"Bcase.BMP");
 			gtk_container_add(GTK_CONTAINER(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox),gtk_image_new_from_file(path));
 			gtk_widget_show_all(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox);
-			/** -# détruire l'image sur le nouvel emplacement\n
-			*/
 			gtk_container_remove(GTK_CONTAINER(game->eventbox[x][y].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[x][y].eventbox))->data);
-			/** -# y charger l'image du terrain\n
-			*/
 			sprintf(path,"%s%s",PATH,"Bcase.BMP");
 			gtk_container_add(GTK_CONTAINER(game->eventbox[x][y].eventbox),gtk_image_new_from_file(path));
-			/** -# y superposer l'image de l'agneau\n
-			*/
 			sprintf(path,"%s%s",PATH,"lamb.BMP");
 			gtk_image_superimpose(game->eventbox[x][y].eventbox,path);
 			gtk_widget_show_all(game->eventbox[x][y].eventbox);
 		}
-		/** -pour chaque loup, si il a bougé\n
+		/** - pour chaque loup, si il a bougé\n
+		* -# détruire l'image sur l'emplacement actuel\n
+		* -# y charger l'image du terrain\n
+		* -# détruire l'image sur le nouvel emplacement\n
+		* -# y charger l'image du terrain\n
+		* -# y superposer l'image du loup\n
 		*/
 		for(i=0;i<5;i++)
 		{
@@ -74,24 +72,14 @@ void game_history_back(t_game *game, int back)
 			y = ((t_history*)g_list_nth_data(game->data.history, g_list_length(game->data.history)-back))->wolf[i].y;
 			if(game->data.now->wolf[i].x != x || game->data.now->wolf[i].y != y)
 			{
-				/** -# détruire l'image sur l'emplacement actuel\n
-				*/
 				gtk_container_remove(GTK_CONTAINER(game->eventbox[game->data.now->wolf[i].x][game->data.now->wolf[i].y].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[game->data.now->wolf[i].x][game->data.now->wolf[i].y].eventbox))->data);
-				/** -# y charger l'image du terrain\n
-				*/
 				sprintf(path,"%s%s",PATH,"Bcase.BMP");
 				gtk_container_add(GTK_CONTAINER(game->eventbox[game->data.now->wolf[i].x][game->data.now->wolf[i].y].eventbox),gtk_image_new_from_file(path));
 				gtk_widget_show_all(game->eventbox[game->data.now->wolf[i].x][game->data.now->wolf[i].y].eventbox);
-				/** -# détruire l'image sur le nouvel emplacement\n
-				*/
 				gtk_container_remove(GTK_CONTAINER(game->eventbox[x][y].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[x][y].eventbox))->data);
-				/** -# y charger l'image du terrain\n
-				*/
 				sprintf(path,"%s%s",PATH,"Bcase.BMP");
 				gtk_container_add(GTK_CONTAINER(game->eventbox[x][y].eventbox),gtk_image_new_from_file(path));
 				gtk_widget_show_all(game->eventbox[x][y].eventbox);
-				/** -# y superposer l'image du loup\n
-				*/
 				sprintf(path,"%s%s",PATH,"wolf.BMP");
 				gtk_image_superimpose(game->eventbox[x][y].eventbox,path);
 			}
