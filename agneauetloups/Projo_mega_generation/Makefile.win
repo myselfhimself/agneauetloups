@@ -1,0 +1,57 @@
+# Project: Projo_mega_generation
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = Projo_mega_generation_private.res
+OBJ  = tests.o [DOX]game.o [DOX]GDK.o [DOX]OS.o [DOX]history.o IA.o IA_utilities.o init.o main.o $(RES)
+LINKOBJ  = tests.o [DOX]game.o [DOX]GDK.o [DOX]OS.o [DOX]history.o IA.o IA_utilities.o init.o main.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -limm32 -lshell32 -lole32 -luuid -lintl -lcairo.dll -lpangowin32-1.0.dll -latk-1.0.dll -lgdk_pixbuf-2.0.dll -lgdk-win32-2.0.dll -lglib-2.0.dll -lgmodule-2.0.dll -lgobject-2.0.dll -lgthread-2.0.dll -lgtk-win32-2.0.dll -lpango-1.0.dll  
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = Projo_mega_generation.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS) -I"C:\Dev-Cpp\\include\gtk-2.0" -I"C:\Dev-Cpp\\lib\gtk-2.0\include" -I"C:\Dev-Cpp\\include\atk-1.0" -I"C:\Dev-Cpp\\include\pango-1.0" -I"C:\Dev-Cpp\\include\cairo" -I"C:\Dev-Cpp\\include\glib-2.0" -I"C:\Dev-Cpp\\include\glib-2.0\glib" -I"C:\Dev-Cpp\\lib\glib-2.0" -I"C:\Dev-Cpp\\lib\glib-2.0\include" -mno-cygwin -mms-bitfields  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before Projo_mega_generation.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "Projo_mega_generation.exe" $(LIBS)
+
+tests.o: tests.c
+	$(CC) -c tests.c -o tests.o $(CFLAGS)
+
+[DOX]game.o: [DOX]game.c
+	$(CC) -c [DOX]game.c -o [DOX]game.o $(CFLAGS)
+
+[DOX]GDK.o: [DOX]GDK.c
+	$(CC) -c [DOX]GDK.c -o [DOX]GDK.o $(CFLAGS)
+
+[DOX]OS.o: [DOX]OS.c
+	$(CC) -c [DOX]OS.c -o [DOX]OS.o $(CFLAGS)
+
+[DOX]history.o: [DOX]history.c
+	$(CC) -c [DOX]history.c -o [DOX]history.o $(CFLAGS)
+
+IA.o: IA.c
+	$(CC) -c IA.c -o IA.o $(CFLAGS)
+
+IA_utilities.o: IA_utilities.c
+	$(CC) -c IA_utilities.c -o IA_utilities.o $(CFLAGS)
+
+init.o: init.c
+	$(CC) -c init.c -o init.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+Projo_mega_generation_private.res: Projo_mega_generation_private.rc 
+	$(WINDRES) -i Projo_mega_generation_private.rc --input-format=rc -o Projo_mega_generation_private.res -O coff 
