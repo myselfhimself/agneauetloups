@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 #include <gtk/gtk.h>
 
 #include "[DOX]constants.h"

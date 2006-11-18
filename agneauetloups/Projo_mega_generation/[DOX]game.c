@@ -3,6 +3,52 @@
 
 #include "[DOX]main.h"
 
+void make_movement(t_game *game,int x1,int y1,int x2,int y2)
+{
+    int i=0, type;
+    gchar path[128];
+    /** - détecter l'animal concerné\n
+    */
+    while(game->pawn[i].position.x != x1 || game->pawn[i].position.y != y1)
+    {
+        i++;
+    }
+    if(i==0) type = LAMB;
+    else type = WOLF;
+    /** - retirer l'image initiale de la case où se trouve l'animal\n
+    */
+    gtk_container_remove(GTK_CONTAINER(game->eventbox[x1][y1].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[x1][y1].eventbox))->data);
+    /** - -> remettre l'image de fond\n
+    */
+    strcpy(path,PATH);
+	strcat(path,"Bcase.BMP");
+	gtk_container_add(GTK_CONTAINER(game->eventbox[x1][y1].eventbox),gtk_image_new_from_file(path));
+	gtk_widget_show_all(game->eventbox[x1][y1].eventbox);
+    /** - -> créer un historique du jeu\n
+    */
+	game_history_add(game);
+	/** - -> modifier les positions dans les structures\n
+	*/
+    if(type == LAMB)
+    {
+        game->data.now->lamb.x = x2;
+        game->data.now->lamb.y = y2;
+    }
+    else
+    {
+        game->data.now->wolf[i-1].x = x2;
+        game->data.now->wolf[i-1].y = y2;
+    }
+    game->pawn[i].position.x = x2;
+    game->pawn[i].position.y = y2;
+    /** - -> superposer l'image de l'animal sur la nouvelle case\n
+    */
+	if(type == LAMB) sprintf(path,"%s%s",PATH,"lamb.BMP");
+    else sprintf(path,"%s%s",PATH,"wolf.BMP");
+	gtk_image_superimpose(game->eventbox[x2][y2].eventbox,path);
+    afficher_console(game);
+}
+
 void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
 {
     /** récupère la position du click en fonction de l'eventbox émettrice du signal\n
@@ -22,7 +68,23 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
     i-=11; j-=11;
 	/** - si la sélection n'est pas faite\n
 	*/
-    if(game->data.selection == NULL)
+	if(game_is_over(game->pawn))
+	{
+        /*if(wolves_won(game->pawn))
+        {
+            for(i=0;i<10;i+=2)
+            {
+                for(j=0;j<10;j++)
+                {
+                    gtk_container_remove(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox))->data);
+                    sprintf(path,"%s%s",PATH,"blood.BMP");
+	                gtk_container_add(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox),gtk_image_new_from_file(path));
+	                gtk_widget_show_all(game->eventbox[i+1-j%2][j].eventbox);
+                }
+			}
+        }*/
+    }
+    else if(game->data.selection == NULL)
     {
         /** -# regarder si la position correspond au bon joueur au bon endroit\n
 		*     -# si oui enregistrer la position\n
@@ -120,7 +182,9 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
 				game->data.now->curplayer = LAMB;
                 // => appel du next_turn
                 afficher_console(game);
-            }
+                preIA(game,8);
+                preIA(game,8);
+			}
 		}
     }
 }
