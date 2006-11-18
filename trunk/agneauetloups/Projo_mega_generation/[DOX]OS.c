@@ -33,6 +33,7 @@ int init_OS_path()
 		fclose(current_path);
 		system("rm /current_path");
 	}
+    strcat(PATH,"console/");
 	return SUCCESS;
 }
 
