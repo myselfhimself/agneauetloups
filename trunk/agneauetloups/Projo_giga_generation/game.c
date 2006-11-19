@@ -134,6 +134,7 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
                 game->data.now->curplayer = WOLF;
                 // => appel du next_turn
                 afficher_console(game);
+                preIA(game,8);
             }
         }
         else

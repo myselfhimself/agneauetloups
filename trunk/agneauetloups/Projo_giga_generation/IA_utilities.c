@@ -70,6 +70,7 @@ int wolves_in_line(t_association pawn[6])
         if(pawn[i].position.y < linemin) linemin = pawn[i].position.y;
     }
     /** - si les loups sont tous sur la même ligne => retourne 1\n
+    * - si l'agneau bloque la progression => retourne 0\n
     * - sinon tester le positionnement :\n
     * -# il faut que les loups soient sur 2 lignes et pas plus\n
     * -# il faut qu'ils aient avancés de gauche à droite ou de droite à gauche (dépend de la ligne)\n
@@ -111,6 +112,8 @@ int wolves_in_line(t_association pawn[6])
             }
         }
     }
+    i = next_wolf_to_move_in_line(pawn);
+    if(!possible_and_free(pawn[i].position.x-1,pawn[i].position.y-1,pawn) && !possible_and_free(pawn[i].position.x+1,pawn[i].position.y-1,pawn)) result = 0;
     return result;
 }
 

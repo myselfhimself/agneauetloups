@@ -24,8 +24,8 @@ int main (int argc, char *argv[])
   table = window_init(&win);
   
   
-  game_init(&game,table,"Joe",HUMAN,WOLF,"Bob",HUMAN,LAMB);
-  //game_init(&game,table,"Joe",HUMAN,LAMB,"Bob",HUMAN,WOLF);
+  //game_init(&game,table,"Joe",HUMAN,WOLF,"Bob",HUMAN,LAMB);
+  game_init(&game,table,"Joe",HUMAN,LAMB,"Bob",HUMAN,WOLF);
   //button = gtk_button_new_with_label("back");
   //gtk_table_attach_defaults(GTK_TABLE(table),button,10,11,9,10);
   //g_signal_connect(button,"clicked",GTK_SIGNAL_FUNC(go_back),game);

@@ -3,7 +3,7 @@
 void preIA(t_game *game,int depth)
 {
 	time_t t0,t;
-    int topleft,topright,bottomleft[5],bottomright[5],sum,i;
+    int topleft,topright,bottomleft[5],bottomright[5],sum,i,min=0,minplace=0;
 	int player = game->data.now->curplayer;
 	t_association *pawn=game->pawn;
 	int lx  = pawn[0].position.x;    int ly  = pawn[0].position.y;
@@ -100,12 +100,20 @@ void preIA(t_game *game,int depth)
             for(i=1;i<6;i++)
             {
                 if(possible_and_free(pawn[i].position.x-1,pawn[i].position.y-1,pawn))
-			    bottomleft[i] = IA(WOLF,depth,pawn[i].position.x-1,pawn[i].position.y-1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
+			    bottomleft[i] = IA(LAMB,depth,pawn[i].position.x-1,pawn[i].position.y-1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
 		        else bottomleft[i] = 0;
 		        if(possible_and_free(pawn[i].position.x+1,pawn[i].position.y-1,pawn))
-			    bottomright[i] = IA(WOLF,depth,pawn[i].position.x+1,pawn[i].position.y-1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
+			    bottomright[i] = IA(LAMB,depth,pawn[i].position.x+1,pawn[i].position.y-1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
 		        else bottomright[i] = 0;
 		    }
+		    min = pow(2,sizeof(int)*8-1)-2;
+		    for(i=1;i<6;i++)
+            {
+                if((min > bottomleft[i]) && possible_and_free(pawn[i].position.x-1,pawn[i].position.y-1,pawn)) {min = bottomleft[i];minplace = i;}
+                if((min > bottomright[i]) && possible_and_free(pawn[i].position.x+1,pawn[i].position.y-1,pawn)) {min = bottomright[i];minplace = 10*i;}
+            }
+            if(minplace < 10) make_movement(game,game->pawn[minplace].position.x,game->pawn[minplace].position.y,game->pawn[minplace].position.x-1,game->pawn[minplace].position.y-1);
+            else make_movement(game,game->pawn[minplace/10].position.x,game->pawn[minplace/10].position.y,game->pawn[minplace/10].position.x+1,game->pawn[minplace/10].position.y-1);
         }
         /** - changer de joueur\n
         */
