@@ -10,22 +10,17 @@
 #include <gtk/gtk.h>
 
 #include "interface.h"
-//////#include "support.h"
+////#include "(null)"
 
 int
 main (int argc, char *argv[])
 {
   GtkWidget *jeu;
-  GtkWidget *connection;
-  GtkWidget *son;
-  GtkWidget *jeusimple;
-  GtkWidget *reseau_choix_joueur;
-  GtkWidget *fenetre_about;
 
   gtk_set_locale ();
   gtk_init (&argc, &argv);
 
-////////  add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+////  add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
   /*
    * The following code was added by Glade to create one of each component
@@ -34,16 +29,6 @@ main (int argc, char *argv[])
    */
   jeu = create_jeu ();
   gtk_widget_show (jeu);
-  connection = create_connection ();
-  gtk_widget_show (connection);
-  son = create_son ();
-  gtk_widget_show (son);
-  jeusimple = create_jeusimple ();
-  gtk_widget_show (jeusimple);
-  reseau_choix_joueur = create_reseau_choix_joueur ();
-  gtk_widget_show (reseau_choix_joueur);
-  fenetre_about = create_fenetre_about ();
-  gtk_widget_show (fenetre_about);
 
   gtk_main ();
   return 0;

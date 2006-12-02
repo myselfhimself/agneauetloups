@@ -6,7 +6,7 @@
 
 #include "callbacks.h"
 #include "interface.h"
-//////#include "support.h"
+////#include "(null)"
 
 
 void
@@ -83,14 +83,6 @@ on_th__mes_sonores1_activate           (GtkMenuItem     *menuitem,
 
 void
 on_th__mes_graphiques1_activate        (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-on_mode_d_emploi1_activate             (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
 
