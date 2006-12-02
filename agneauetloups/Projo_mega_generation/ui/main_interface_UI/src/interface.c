@@ -17,7 +17,7 @@
 
 #include "callbacks.h"
 #include "interface.h"
-//#include "support.h"
+#include "support.h"
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
@@ -33,39 +33,37 @@ create_jeu (void)
   GtkWidget *vbox1;
   GtkWidget *menubar1;
   GtkWidget *menuitem1;
-  GtkWidget *image42;
+  GtkWidget *image142;
   GtkWidget *menuitem1_menu;
   GtkWidget *nouvelle_partie_locale1;
-  GtkWidget *image43;
+  GtkWidget *image143;
   GtkWidget *nouvelle_partie_r__seau1;
-  GtkWidget *image44;
+  GtkWidget *image144;
   GtkWidget *recharger_une_partie1;
-  GtkWidget *image45;
+  GtkWidget *image145;
   GtkWidget *enregistrer2;
   GtkWidget *enregistrer_sous1;
   GtkWidget *separatormenuitem1;
   GtkWidget *quitter1;
   GtkWidget *menuitem2;
-  GtkWidget *image46;
+  GtkWidget *image146;
   GtkWidget *menuitem2_menu;
   GtkWidget *coup_pr__c__dent1;
-  GtkWidget *image47;
+  GtkWidget *image147;
   GtkWidget *arr__ter_la_partie1;
-  GtkWidget *image48;
+  GtkWidget *image148;
   GtkWidget *prefs;
-  GtkWidget *image49;
+  GtkWidget *image149;
   GtkWidget *prefs_menu;
   GtkWidget *th__mes_sonores1;
-  GtkWidget *image50;
+  GtkWidget *image150;
   GtkWidget *th__mes_graphiques1;
-  GtkWidget *image51;
+  GtkWidget *image151;
   GtkWidget *menuitem4;
-  GtkWidget *image52;
+  GtkWidget *image152;
   GtkWidget *menuitem4_menu;
-  GtkWidget *mode_d_emploi1;
-  GtkWidget *image53;
   GtkWidget *about1;
-  GtkWidget *image54;
+  GtkWidget *image153;
   GtkWidget *table1;
   GtkAccelGroup *accel_group;
 
@@ -87,9 +85,9 @@ create_jeu (void)
   gtk_widget_show (menuitem1);
   gtk_container_add (GTK_CONTAINER (menubar1), menuitem1);
 
-  image42 = gtk_image_new_from_stock ("gtk-jump-to", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image42);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem1), image42);
+  image142 = gtk_image_new_from_stock ("gtk-jump-to", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image142);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem1), image142);
 
   menuitem1_menu = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem1), menuitem1_menu);
@@ -97,26 +95,35 @@ create_jeu (void)
   nouvelle_partie_locale1 = gtk_image_menu_item_new_with_mnemonic ("Nouvelle partie locale");
   gtk_widget_show (nouvelle_partie_locale1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), nouvelle_partie_locale1);
+  gtk_widget_add_accelerator (nouvelle_partie_locale1, "activate", accel_group,
+                              GDK_N, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image43 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image43);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (nouvelle_partie_locale1), image43);
+  image143 = gtk_image_new_from_stock ("gtk-select-color", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image143);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (nouvelle_partie_locale1), image143);
 
   nouvelle_partie_r__seau1 = gtk_image_menu_item_new_with_mnemonic ("Nouvelle partie r\303\251seau");
   gtk_widget_show (nouvelle_partie_r__seau1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), nouvelle_partie_r__seau1);
+  gtk_widget_add_accelerator (nouvelle_partie_r__seau1, "activate", accel_group,
+                              GDK_I, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image44 = gtk_image_new_from_stock ("gtk-connect", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image44);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (nouvelle_partie_r__seau1), image44);
+  image144 = gtk_image_new_from_stock ("gtk-connect", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image144);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (nouvelle_partie_r__seau1), image144);
 
   recharger_une_partie1 = gtk_image_menu_item_new_with_mnemonic ("Recharger une partie");
   gtk_widget_show (recharger_une_partie1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), recharger_une_partie1);
+  gtk_widget_add_accelerator (recharger_une_partie1, "activate", accel_group,
+                              GDK_R, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image45 = gtk_image_new_from_stock ("gtk-open", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image45);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (recharger_une_partie1), image45);
+  image145 = gtk_image_new_from_stock ("gtk-open", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image145);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (recharger_une_partie1), image145);
 
   enregistrer2 = gtk_image_menu_item_new_from_stock ("gtk-save", accel_group);
   gtk_widget_show (enregistrer2);
@@ -139,9 +146,9 @@ create_jeu (void)
   gtk_widget_show (menuitem2);
   gtk_container_add (GTK_CONTAINER (menubar1), menuitem2);
 
-  image46 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image46);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem2), image46);
+  image146 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image146);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem2), image146);
 
   menuitem2_menu = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem2), menuitem2_menu);
@@ -149,26 +156,32 @@ create_jeu (void)
   coup_pr__c__dent1 = gtk_image_menu_item_new_with_mnemonic ("Coup pr\303\251c\303\251dent");
   gtk_widget_show (coup_pr__c__dent1);
   gtk_container_add (GTK_CONTAINER (menuitem2_menu), coup_pr__c__dent1);
+  gtk_widget_add_accelerator (coup_pr__c__dent1, "activate", accel_group,
+                              GDK_P, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image47 = gtk_image_new_from_stock ("gtk-goto-first", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image47);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (coup_pr__c__dent1), image47);
+  image147 = gtk_image_new_from_stock ("gtk-goto-first", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image147);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (coup_pr__c__dent1), image147);
 
   arr__ter_la_partie1 = gtk_image_menu_item_new_with_mnemonic ("Arr\303\252ter la partie");
   gtk_widget_show (arr__ter_la_partie1);
   gtk_container_add (GTK_CONTAINER (menuitem2_menu), arr__ter_la_partie1);
+  gtk_widget_add_accelerator (arr__ter_la_partie1, "activate", accel_group,
+                              GDK_X, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image48 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image48);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (arr__ter_la_partie1), image48);
+  image148 = gtk_image_new_from_stock ("gtk-no", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image148);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (arr__ter_la_partie1), image148);
 
   prefs = gtk_image_menu_item_new_with_mnemonic ("_Pr\303\251f\303\251rences");
   gtk_widget_show (prefs);
   gtk_container_add (GTK_CONTAINER (menubar1), prefs);
 
-  image49 = gtk_image_new_from_stock ("gtk-preferences", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image49);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (prefs), image49);
+  image149 = gtk_image_new_from_stock ("gtk-preferences", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image149);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (prefs), image149);
 
   prefs_menu = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (prefs), prefs_menu);
@@ -176,45 +189,46 @@ create_jeu (void)
   th__mes_sonores1 = gtk_image_menu_item_new_with_mnemonic ("Th\303\250mes sonores");
   gtk_widget_show (th__mes_sonores1);
   gtk_container_add (GTK_CONTAINER (prefs_menu), th__mes_sonores1);
+  gtk_widget_add_accelerator (th__mes_sonores1, "activate", accel_group,
+                              GDK_A, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image50 = gtk_image_new_from_stock ("gtk-yes", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image50);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (th__mes_sonores1), image50);
+  image150 = gtk_image_new_from_stock ("gtk-yes", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image150);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (th__mes_sonores1), image150);
 
   th__mes_graphiques1 = gtk_image_menu_item_new_with_mnemonic ("Th\303\250mes graphiques");
   gtk_widget_show (th__mes_graphiques1);
   gtk_container_add (GTK_CONTAINER (prefs_menu), th__mes_graphiques1);
+  gtk_widget_add_accelerator (th__mes_graphiques1, "activate", accel_group,
+                              GDK_G, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image51 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image51);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (th__mes_graphiques1), image51);
+  image151 = gtk_image_new_from_stock ("gtk-clear", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image151);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (th__mes_graphiques1), image151);
 
   menuitem4 = gtk_image_menu_item_new_with_mnemonic ("_?");
   gtk_widget_show (menuitem4);
   gtk_container_add (GTK_CONTAINER (menubar1), menuitem4);
 
-  image52 = gtk_image_new_from_stock ("gtk-dialog-info", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image52);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem4), image52);
+  image152 = gtk_image_new_from_stock ("gtk-dialog-question", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image152);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem4), image152);
 
   menuitem4_menu = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem4), menuitem4_menu);
 
-  mode_d_emploi1 = gtk_image_menu_item_new_with_mnemonic ("_Mode d'emploi");
-  gtk_widget_show (mode_d_emploi1);
-  gtk_container_add (GTK_CONTAINER (menuitem4_menu), mode_d_emploi1);
-
-  image53 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image53);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mode_d_emploi1), image53);
-
   about1 = gtk_image_menu_item_new_with_mnemonic ("_A propos");
   gtk_widget_show (about1);
   gtk_container_add (GTK_CONTAINER (menuitem4_menu), about1);
+  gtk_widget_add_accelerator (about1, "activate", accel_group,
+                              GDK_W, (GdkModifierType) GDK_CONTROL_MASK,
+                              GTK_ACCEL_VISIBLE);
 
-  image54 = gtk_image_new_from_stock ("gtk-info", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image54);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (about1), image54);
+  image153 = gtk_image_new_from_stock ("gtk-home", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image153);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (about1), image153);
 
   table1 = gtk_table_new (10, 10, FALSE);
   gtk_widget_show (table1);
@@ -250,9 +264,6 @@ create_jeu (void)
   g_signal_connect ((gpointer) th__mes_graphiques1, "activate",
                     G_CALLBACK (on_th__mes_graphiques1_activate),
                     NULL);
-  g_signal_connect ((gpointer) mode_d_emploi1, "activate",
-                    G_CALLBACK (on_mode_d_emploi1_activate),
-                    NULL);
   g_signal_connect ((gpointer) about1, "activate",
                     G_CALLBACK (on_about1_activate),
                     NULL);
@@ -262,39 +273,37 @@ create_jeu (void)
   GLADE_HOOKUP_OBJECT (jeu, vbox1, "vbox1");
   GLADE_HOOKUP_OBJECT (jeu, menubar1, "menubar1");
   GLADE_HOOKUP_OBJECT (jeu, menuitem1, "menuitem1");
-  GLADE_HOOKUP_OBJECT (jeu, image42, "image42");
+  GLADE_HOOKUP_OBJECT (jeu, image142, "image142");
   GLADE_HOOKUP_OBJECT (jeu, menuitem1_menu, "menuitem1_menu");
   GLADE_HOOKUP_OBJECT (jeu, nouvelle_partie_locale1, "nouvelle_partie_locale1");
-  GLADE_HOOKUP_OBJECT (jeu, image43, "image43");
+  GLADE_HOOKUP_OBJECT (jeu, image143, "image143");
   GLADE_HOOKUP_OBJECT (jeu, nouvelle_partie_r__seau1, "nouvelle_partie_r__seau1");
-  GLADE_HOOKUP_OBJECT (jeu, image44, "image44");
+  GLADE_HOOKUP_OBJECT (jeu, image144, "image144");
   GLADE_HOOKUP_OBJECT (jeu, recharger_une_partie1, "recharger_une_partie1");
-  GLADE_HOOKUP_OBJECT (jeu, image45, "image45");
+  GLADE_HOOKUP_OBJECT (jeu, image145, "image145");
   GLADE_HOOKUP_OBJECT (jeu, enregistrer2, "enregistrer2");
   GLADE_HOOKUP_OBJECT (jeu, enregistrer_sous1, "enregistrer_sous1");
   GLADE_HOOKUP_OBJECT (jeu, separatormenuitem1, "separatormenuitem1");
   GLADE_HOOKUP_OBJECT (jeu, quitter1, "quitter1");
   GLADE_HOOKUP_OBJECT (jeu, menuitem2, "menuitem2");
-  GLADE_HOOKUP_OBJECT (jeu, image46, "image46");
+  GLADE_HOOKUP_OBJECT (jeu, image146, "image146");
   GLADE_HOOKUP_OBJECT (jeu, menuitem2_menu, "menuitem2_menu");
   GLADE_HOOKUP_OBJECT (jeu, coup_pr__c__dent1, "coup_pr__c__dent1");
-  GLADE_HOOKUP_OBJECT (jeu, image47, "image47");
+  GLADE_HOOKUP_OBJECT (jeu, image147, "image147");
   GLADE_HOOKUP_OBJECT (jeu, arr__ter_la_partie1, "arr__ter_la_partie1");
-  GLADE_HOOKUP_OBJECT (jeu, image48, "image48");
+  GLADE_HOOKUP_OBJECT (jeu, image148, "image148");
   GLADE_HOOKUP_OBJECT (jeu, prefs, "prefs");
-  GLADE_HOOKUP_OBJECT (jeu, image49, "image49");
+  GLADE_HOOKUP_OBJECT (jeu, image149, "image149");
   GLADE_HOOKUP_OBJECT (jeu, prefs_menu, "prefs_menu");
   GLADE_HOOKUP_OBJECT (jeu, th__mes_sonores1, "th__mes_sonores1");
-  GLADE_HOOKUP_OBJECT (jeu, image50, "image50");
+  GLADE_HOOKUP_OBJECT (jeu, image150, "image150");
   GLADE_HOOKUP_OBJECT (jeu, th__mes_graphiques1, "th__mes_graphiques1");
-  GLADE_HOOKUP_OBJECT (jeu, image51, "image51");
+  GLADE_HOOKUP_OBJECT (jeu, image151, "image151");
   GLADE_HOOKUP_OBJECT (jeu, menuitem4, "menuitem4");
-  GLADE_HOOKUP_OBJECT (jeu, image52, "image52");
+  GLADE_HOOKUP_OBJECT (jeu, image152, "image152");
   GLADE_HOOKUP_OBJECT (jeu, menuitem4_menu, "menuitem4_menu");
-  GLADE_HOOKUP_OBJECT (jeu, mode_d_emploi1, "mode_d_emploi1");
-  GLADE_HOOKUP_OBJECT (jeu, image53, "image53");
   GLADE_HOOKUP_OBJECT (jeu, about1, "about1");
-  GLADE_HOOKUP_OBJECT (jeu, image54, "image54");
+  GLADE_HOOKUP_OBJECT (jeu, image153, "image153");
   GLADE_HOOKUP_OBJECT (jeu, table1, "table1");
 
   gtk_window_add_accel_group (GTK_WINDOW (jeu), accel_group);
@@ -480,7 +489,6 @@ create_son (void)
   GtkWidget *son;
   GtkWidget *fixed2;
   GtkWidget *iconview1;
-  GtkWidget *comboboxentry1;
   GtkWidget *button4;
   GtkWidget *alignment5;
   GtkWidget *hbox5;
@@ -491,9 +499,6 @@ create_son (void)
   GtkWidget *hbox6;
   GtkWidget *image60;
   GtkWidget *label9;
-  GtkWidget *label11;
-  GtkWidget *label10;
-  GtkWidget *vseparator1;
   GtkWidget *button2;
   GtkWidget *alignment3;
   GtkWidget *hbox3;
@@ -509,28 +514,26 @@ create_son (void)
   GtkWidget *hbox7;
   GtkWidget *image61;
   GtkWidget *label12;
+  GtkWidget *vseparator1;
+  GtkWidget *label10;
+  GtkWidget *label11;
+  GtkWidget *comboboxentry1;
 
   son = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (son), "Th\303\250mes sonores");
+  gtk_window_set_resizable (GTK_WINDOW (son), FALSE);
   gtk_window_set_icon_name (GTK_WINDOW (son), "gtk-cdrom");
 
   fixed2 = gtk_fixed_new ();
   gtk_widget_show (fixed2);
   gtk_container_add (GTK_CONTAINER (son), fixed2);
+  gtk_widget_set_size_request (fixed2, 442, 256);
 
   iconview1 = gtk_icon_view_new ();
   gtk_widget_show (iconview1);
   gtk_fixed_put (GTK_FIXED (fixed2), iconview1, 24, 40);
-  gtk_widget_set_size_request (iconview1, 64, 208);
+  gtk_widget_set_size_request (iconview1, 64, 192);
   gtk_container_set_border_width (GTK_CONTAINER (iconview1), 1);
-
-  comboboxentry1 = gtk_combo_box_entry_new_text ();
-  gtk_widget_show (comboboxentry1);
-  gtk_fixed_put (GTK_FIXED (fixed2), comboboxentry1, 112, 48);
-  gtk_widget_set_size_request (comboboxentry1, 179, 26);
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-campagnes.son");
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-montage.son");
-  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-film-horreur.son");
 
   button4 = gtk_button_new ();
   gtk_widget_show (button4);
@@ -573,21 +576,6 @@ create_son (void)
   label9 = gtk_label_new_with_mnemonic ("Importer un th\303\250me...");
   gtk_widget_show (label9);
   gtk_box_pack_start (GTK_BOX (hbox6), label9, FALSE, FALSE, 0);
-
-  label11 = gtk_label_new ("Choix du th\303\250me");
-  gtk_widget_show (label11);
-  gtk_fixed_put (GTK_FIXED (fixed2), label11, 112, 8);
-  gtk_widget_set_size_request (label11, 112, 24);
-
-  label10 = gtk_label_new ("Aper\303\247us");
-  gtk_widget_show (label10);
-  gtk_fixed_put (GTK_FIXED (fixed2), label10, 24, 8);
-  gtk_widget_set_size_request (label10, 56, 24);
-
-  vseparator1 = gtk_vseparator_new ();
-  gtk_widget_show (vseparator1);
-  gtk_fixed_put (GTK_FIXED (fixed2), vseparator1, 304, 8);
-  gtk_widget_set_size_request (vseparator1, 16, 248);
 
   button2 = gtk_button_new ();
   gtk_widget_show (button2);
@@ -652,11 +640,35 @@ create_son (void)
   gtk_widget_show (label12);
   gtk_box_pack_start (GTK_BOX (hbox7), label12, FALSE, FALSE, 0);
 
+  vseparator1 = gtk_vseparator_new ();
+  gtk_widget_show (vseparator1);
+  gtk_fixed_put (GTK_FIXED (fixed2), vseparator1, 304, 8);
+  gtk_widget_set_size_request (vseparator1, 16, 248);
+
+  label10 = gtk_label_new ("<b>Aper\303\247us</b>");
+  gtk_widget_show (label10);
+  gtk_fixed_put (GTK_FIXED (fixed2), label10, 24, 8);
+  gtk_widget_set_size_request (label10, 56, 24);
+  gtk_label_set_use_markup (GTK_LABEL (label10), TRUE);
+
+  label11 = gtk_label_new ("<b>Choix du th\303\250me</b>");
+  gtk_widget_show (label11);
+  gtk_fixed_put (GTK_FIXED (fixed2), label11, 112, 8);
+  gtk_widget_set_size_request (label11, 112, 24);
+  gtk_label_set_use_markup (GTK_LABEL (label11), TRUE);
+
+  comboboxentry1 = gtk_combo_box_entry_new_text ();
+  gtk_widget_show (comboboxentry1);
+  gtk_fixed_put (GTK_FIXED (fixed2), comboboxentry1, 112, 48);
+  gtk_widget_set_size_request (comboboxentry1, 179, 26);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-campagnes.son");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-montage.son");
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboboxentry1), "sons-film-horreur.son");
+
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (son, son, "son");
   GLADE_HOOKUP_OBJECT (son, fixed2, "fixed2");
   GLADE_HOOKUP_OBJECT (son, iconview1, "iconview1");
-  GLADE_HOOKUP_OBJECT (son, comboboxentry1, "comboboxentry1");
   GLADE_HOOKUP_OBJECT (son, button4, "button4");
   GLADE_HOOKUP_OBJECT (son, alignment5, "alignment5");
   GLADE_HOOKUP_OBJECT (son, hbox5, "hbox5");
@@ -667,9 +679,6 @@ create_son (void)
   GLADE_HOOKUP_OBJECT (son, hbox6, "hbox6");
   GLADE_HOOKUP_OBJECT (son, image60, "image60");
   GLADE_HOOKUP_OBJECT (son, label9, "label9");
-  GLADE_HOOKUP_OBJECT (son, label11, "label11");
-  GLADE_HOOKUP_OBJECT (son, label10, "label10");
-  GLADE_HOOKUP_OBJECT (son, vseparator1, "vseparator1");
   GLADE_HOOKUP_OBJECT (son, button2, "button2");
   GLADE_HOOKUP_OBJECT (son, alignment3, "alignment3");
   GLADE_HOOKUP_OBJECT (son, hbox3, "hbox3");
@@ -685,6 +694,10 @@ create_son (void)
   GLADE_HOOKUP_OBJECT (son, hbox7, "hbox7");
   GLADE_HOOKUP_OBJECT (son, image61, "image61");
   GLADE_HOOKUP_OBJECT (son, label12, "label12");
+  GLADE_HOOKUP_OBJECT (son, vseparator1, "vseparator1");
+  GLADE_HOOKUP_OBJECT (son, label10, "label10");
+  GLADE_HOOKUP_OBJECT (son, label11, "label11");
+  GLADE_HOOKUP_OBJECT (son, comboboxentry1, "comboboxentry1");
 
   return son;
 }
@@ -882,11 +895,10 @@ create_reseau_choix_joueur (void)
   GtkWidget *reseau_choix_joueur;
   GtkWidget *dialog_vbox3;
   GtkWidget *fixed4;
-  GtkWidget *label20;
   GtkWidget *radiobutton8;
   GSList *radiobutton8_group = NULL;
   GtkWidget *radiobutton9;
-  GSList *radiobutton9_group = NULL;
+  GtkWidget *label20;
   GtkWidget *dialog_action_area3;
   GtkWidget *cancelbutton3;
   GtkWidget *alignment11;
@@ -911,14 +923,6 @@ create_reseau_choix_joueur (void)
   gtk_widget_show (fixed4);
   gtk_box_pack_start (GTK_BOX (dialog_vbox3), fixed4, TRUE, TRUE, 0);
 
-  label20 = gtk_label_new ("<b>Tu as l'avantage de choisir ton camp</b>");
-  gtk_widget_show (label20);
-  gtk_fixed_put (GTK_FIXED (fixed4), label20, 48, 8);
-  gtk_widget_set_size_request (label20, 184, 48);
-  gtk_label_set_use_markup (GTK_LABEL (label20), TRUE);
-  gtk_label_set_justify (GTK_LABEL (label20), GTK_JUSTIFY_CENTER);
-  gtk_label_set_line_wrap (GTK_LABEL (label20), TRUE);
-
   radiobutton8 = gtk_radio_button_new_with_mnemonic (NULL, "Agneau");
   gtk_widget_show (radiobutton8);
   gtk_fixed_put (GTK_FIXED (fixed4), radiobutton8, 64, 64);
@@ -930,8 +934,16 @@ create_reseau_choix_joueur (void)
   gtk_widget_show (radiobutton9);
   gtk_fixed_put (GTK_FIXED (fixed4), radiobutton9, 64, 96);
   gtk_widget_set_size_request (radiobutton9, 104, 22);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton9), radiobutton9_group);
-  radiobutton9_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton9));
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton9), radiobutton8_group);
+  radiobutton8_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton9));
+
+  label20 = gtk_label_new ("<b>Tu as l'avantage de choisir ton camp</b>");
+  gtk_widget_show (label20);
+  gtk_fixed_put (GTK_FIXED (fixed4), label20, 24, 16);
+  gtk_widget_set_size_request (label20, 184, 48);
+  gtk_label_set_use_markup (GTK_LABEL (label20), TRUE);
+  gtk_label_set_justify (GTK_LABEL (label20), GTK_JUSTIFY_CENTER);
+  gtk_label_set_line_wrap (GTK_LABEL (label20), TRUE);
 
   dialog_action_area3 = GTK_DIALOG (reseau_choix_joueur)->action_area;
   gtk_widget_show (dialog_action_area3);
@@ -983,9 +995,9 @@ create_reseau_choix_joueur (void)
   GLADE_HOOKUP_OBJECT_NO_REF (reseau_choix_joueur, reseau_choix_joueur, "reseau_choix_joueur");
   GLADE_HOOKUP_OBJECT_NO_REF (reseau_choix_joueur, dialog_vbox3, "dialog_vbox3");
   GLADE_HOOKUP_OBJECT (reseau_choix_joueur, fixed4, "fixed4");
-  GLADE_HOOKUP_OBJECT (reseau_choix_joueur, label20, "label20");
   GLADE_HOOKUP_OBJECT (reseau_choix_joueur, radiobutton8, "radiobutton8");
   GLADE_HOOKUP_OBJECT (reseau_choix_joueur, radiobutton9, "radiobutton9");
+  GLADE_HOOKUP_OBJECT (reseau_choix_joueur, label20, "label20");
   GLADE_HOOKUP_OBJECT_NO_REF (reseau_choix_joueur, dialog_action_area3, "dialog_action_area3");
   GLADE_HOOKUP_OBJECT (reseau_choix_joueur, cancelbutton3, "cancelbutton3");
   GLADE_HOOKUP_OBJECT (reseau_choix_joueur, alignment11, "alignment11");
