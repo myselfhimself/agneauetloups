@@ -69,7 +69,14 @@ typedef struct
 t_history;
 
 ///types de packets
-enum{HISTORY,CHAT,NAME};
+//new_pos. info en + : t_history
+//chat. info en + : le message str (char*)
+//choice_request : quel joueur tu veux faire ?
+//choice : tu feras tel joueur (dans un deuxième temps). info en + : int du camp qu'on doit jouer
+//you_dont_play : c'est à moi de jouer, tu ne joues pas
+//game_over : fin de de jeu. info en + : int : si c'est le récepteur du packet qui a gagné.
+//play_again : dis au joueur auquel on envoit le paquet qu'on veut rejouer
+enum{NEW_POS,CHAT,NAME,CHOICE_REQUEST,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
 #define PACKET_SIZE 100*sizeof(char)
 #define CONTENT_SIZE PACKET_SIZE-sizeof(int)
 //packet d'une taille max de 100*sizeof(char), avec sizeof(char) = 1

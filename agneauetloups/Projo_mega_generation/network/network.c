@@ -27,8 +27,17 @@ void packet_display(t_packet* packet)
 			case NAME:
 				printf("packet_display : NAME : %s\n",packet->content);
 				break;
-			case HISTORY:
-				printf("packet_display : HISTORY : x=%d, y=%d, curplayer=%d\n",((t_history*)packet->content)->x,((t_history*)packet->content)->y,((t_history*)packet->content)->curplayer);
+			case NEW_POS:
+				printf("packet_display : NEW_POS : x=%d, y=%d, curplayer=%d\n",((t_history*)packet->content)->x,((t_history*)packet->content)->y,((t_history*)packet->content)->curplayer);
+				break;
+			case CHOICE_REQUEST:
+				printf("packet_display : CHOICE_REQUEST : tu as ete designe pour choisir ton camp\n");
+				break;
+			case CHOICE:
+				printf("packet_display : CHOICE : tu feras tel joueur : %d\n",((int*)(packet->content))[0]);
+				break;
+			case YOU_DONT_PLAY:
+				printf("packet_display : YOU_DONT_PLAY : l'autre va jouer\n");
 				break;
 			default:
 				printf("packet_display : packet->type : type inconnu : %d\n",packet->type);
