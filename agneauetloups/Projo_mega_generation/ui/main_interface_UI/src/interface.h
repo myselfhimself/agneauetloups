@@ -3,8 +3,3 @@
  */
 
 GtkWidget* create_jeu (void);
-GtkWidget* create_connection (void);
-GtkWidget* create_son (void);
-GtkWidget* create_jeusimple (void);
-GtkWidget* create_reseau_choix_joueur (void);
-GtkWidget* create_fenetre_about (void);
