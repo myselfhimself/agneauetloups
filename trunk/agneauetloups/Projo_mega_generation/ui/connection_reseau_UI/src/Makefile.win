@@ -1,0 +1,35 @@
+# Project: connection_reseau_ui
+# Makefile created by Dev-C++ 4.9.9.0
+
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
+WINDRES = windres.exe
+RES  = 
+OBJ  = callbacks.o interface.o main.o $(RES)
+LINKOBJ  = callbacks.o interface.o main.o $(RES)
+LIBS =  -L"C:/Program Files/Dev-Cpp/lib" -L"//aegir/GTK/gtk-win32/lib" -mwindows -L"C:/Gtk-2.2.4/lib" -lgtk-win32-2.0 -lglib-2.0 -lgobject-2.0 -lgdk-win32-2.0 -lgdk_pixbuf-2.0 -lpango-1.0 -latk-1.0 -g3 
+INCS =  -I"C:/Program Files/Dev-Cpp/include"  -I"//aegir/GTK/gtk-win32/include" 
+CXXINCS =  -I"C:/Program Files/Dev-Cpp/include/c++/3.3.1"  -I"C:/Program Files/Dev-Cpp/include/c++/3.3.1/mingw32"  -I"C:/Program Files/Dev-Cpp/include/c++/3.3.1/backward"  -I"C:/Program Files/Dev-Cpp/lib/gcc-lib/mingw32/3.3.1/include"  -I"C:/Program Files/Dev-Cpp/include" 
+BIN  = connection_reseau_ui.exe
+CXXFLAGS = $(CXXINCS)   -g3
+CFLAGS = $(INCS) -I"C:\Gtk-2.2.4\include" -I"C:\Gtk-2.2.4\include\gtk-2.0" -I"C:\Gtk-2.2.4\include\glib-2.0" -I"C:\Gtk-2.2.4\include\atk-1.0" -I"C:\Gtk-2.2.4\include\pango-1.0" -mms-bitfields  -g3
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before connection_reseau_ui.exe all-after
+
+
+clean: clean-custom
+	rm -f $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "connection_reseau_ui.exe" $(LIBS)
+
+callbacks.o: callbacks.c
+	$(CC) -c callbacks.c -o callbacks.o $(CFLAGS)
+
+interface.o: interface.c
+	$(CC) -c interface.c -o interface.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
