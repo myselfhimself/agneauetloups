@@ -23,6 +23,8 @@
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox2">
+      <property name="width_request">333</property>
+      <property name="height_request">372</property>
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
@@ -261,6 +263,7 @@
 	      <property name="width_request">32</property>
 	      <property name="height_request">16</property>
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
 
@@ -449,88 +452,6 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkRadioButton" id="agneau_radio_joueur">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Vrai joueur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">True</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">56</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkRadioButton" id="agneau_radio_ordi">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">False</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	      <property name="group">agneau_radio_joueur</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">104</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkRadioButton" id="loups_radio_joueur">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Vrai joueur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">False</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">144</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkRadioButton" id="loups_radio_ordi">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">True</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	      <property name="group">loups_radio_joueur</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">200</property>
-	    </packing>
-	  </child>
-
-	  <child>
 	    <widget class="GtkRadioButton" id="pos_agneau_bas">
 	      <property name="width_request">105</property>
 	      <property name="height_request">21</property>
@@ -568,6 +489,92 @@
 	    <packing>
 	      <property name="x">80</property>
 	      <property name="y">280</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="agneau_radio_joueur">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Vrai joueur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">True</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <signal name="toggled" handler="on_agneau_radio_joueur_toggled" object="nom_agneau_box" last_modification_time="Sat, 02 Dec 2006 20:14:44 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">56</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="agneau_radio_ordi">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <property name="group">agneau_radio_joueur</property>
+	      <signal name="toggled" handler="on_agneau_radio_ordi_toggled" object="nom_agneau_box" last_modification_time="Sat, 02 Dec 2006 20:15:04 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">104</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="loups_radio_joueur">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Vrai joueur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <signal name="toggled" handler="on_loups_radio_joueur_toggled" object="nom_loups_box" last_modification_time="Sat, 02 Dec 2006 20:15:21 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">144</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="loups_radio_ordi">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">True</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <property name="group">loups_radio_joueur</property>
+	      <signal name="toggled" handler="on_loups_radio_ordi_toggled" object="nom_loups_box" last_modification_time="Sat, 02 Dec 2006 20:15:36 GMT"/>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">200</property>
 	    </packing>
 	  </child>
 	</widget>
