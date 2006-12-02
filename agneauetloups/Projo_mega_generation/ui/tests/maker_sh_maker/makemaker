@@ -17,6 +17,8 @@ else:
 			for d in c:
 				if "#include" in d and "(null)" in d:
 					d = "//"+d
+				elif "PACKAGE_DATA_DIR" in d:
+					d = "//"+d	
 				lines.append(d)
 			a.close()
 			a = open(b,"w")
