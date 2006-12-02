@@ -8,9 +8,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#endif
 #include <string.h>
 #include <stdio.h>
 
@@ -19,7 +17,7 @@
 
 #include "callbacks.h"
 #include "interface.h"
-
+//#include "(null)"
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
@@ -37,18 +35,23 @@ create_jeusimple (void)
   GtkWidget *nom_agneau_box;
   GtkWidget *label14;
   GtkWidget *entry5;
-  GtkWidget *hbox11;
+  GtkWidget *nom_loups_box;
   GtkWidget *label22;
   GtkWidget *entry6;
+  GtkWidget *label15;
   GtkWidget *label16;
   GtkWidget *label13;
-  GtkWidget *radiobutton3;
-  GSList *radiobutton3_group = NULL;
-  GtkWidget *radiobutton7;
-  GSList *radiobutton7_group = NULL;
-  GtkWidget *radiobutton5;
-  GtkWidget *label15;
-  GtkWidget *radiobutton4;
+  GtkWidget *label24;
+  GtkWidget *label23;
+  GtkWidget *pos_agneau_bas;
+  GSList *pos_agneau_bas_group = NULL;
+  GtkWidget *pos_agneau_haut;
+  GtkWidget *agneau_radio_joueur;
+  GSList *agneau_radio_joueur_group = NULL;
+  GtkWidget *agneau_radio_ordi;
+  GtkWidget *loups_radio_joueur;
+  GSList *loups_radio_joueur_group = NULL;
+  GtkWidget *loups_radio_ordi;
   GtkWidget *dialog_action_area2;
   GtkWidget *cancelbutton2;
   GtkWidget *alignment9;
@@ -63,11 +66,12 @@ create_jeusimple (void)
 
   jeusimple = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (jeusimple), "Partie un ou deux joueurs");
-  //gtk_window_set_icon_name (GTK_WINDOW (jeusimple), "gtk-dialog-info");
+  gtk_window_set_icon_name (GTK_WINDOW (jeusimple), "gtk-dialog-info");
   gtk_window_set_type_hint (GTK_WINDOW (jeusimple), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox2 = GTK_DIALOG (jeusimple)->vbox;
   gtk_widget_show (dialog_vbox2);
+  gtk_widget_set_size_request (dialog_vbox2, 333, 372);
 
   fixed3 = gtk_fixed_new ();
   gtk_widget_show (fixed3);
@@ -88,20 +92,27 @@ create_jeusimple (void)
   gtk_box_pack_start (GTK_BOX (nom_agneau_box), entry5, FALSE, FALSE, 0);
   gtk_widget_set_size_request (entry5, 158, 26);
 
-  hbox11 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (hbox11);
-  gtk_fixed_put (GTK_FIXED (fixed3), hbox11, 77, 173);
-  gtk_widget_set_size_request (hbox11, 32, 16);
+  nom_loups_box = gtk_hbox_new (FALSE, 0);
+  gtk_widget_show (nom_loups_box);
+  gtk_fixed_put (GTK_FIXED (fixed3), nom_loups_box, 77, 173);
+  gtk_widget_set_size_request (nom_loups_box, 32, 16);
+  gtk_widget_set_sensitive (nom_loups_box, FALSE);
 
   label22 = gtk_label_new ("Surnom :");
   gtk_widget_show (label22);
-  gtk_box_pack_start (GTK_BOX (hbox11), label22, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (nom_loups_box), label22, FALSE, FALSE, 0);
   gtk_widget_set_size_request (label22, 64, 16);
 
   entry6 = gtk_entry_new ();
   gtk_widget_show (entry6);
-  gtk_box_pack_start (GTK_BOX (hbox11), entry6, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (nom_loups_box), entry6, FALSE, FALSE, 0);
   gtk_widget_set_size_request (entry6, 158, 26);
+
+  label15 = gtk_label_new ("<b>Choisis ton camp et entre ton nom</b>");
+  gtk_widget_show (label15);
+  gtk_fixed_put (GTK_FIXED (fixed3), label15, 24, 8);
+  gtk_widget_set_size_request (label15, 256, 24);
+  gtk_label_set_use_markup (GTK_LABEL (label15), TRUE);
 
   label16 = gtk_label_new ("<b>Loups</b>");
   gtk_widget_show (label16);
@@ -115,41 +126,61 @@ create_jeusimple (void)
   gtk_widget_set_size_request (label13, 64, 24);
   gtk_label_set_use_markup (GTK_LABEL (label13), TRUE);
 
-  radiobutton3 = gtk_radio_button_new_with_mnemonic (NULL, "Jou\303\251 par l'ordinateur");
-  gtk_widget_show (radiobutton3);
-  gtk_fixed_put (GTK_FIXED (fixed3), radiobutton3, 56, 104);
-  gtk_widget_set_size_request (radiobutton3, 160, 24);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton3), radiobutton3_group);
-  radiobutton3_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton3));
+  label24 = gtk_label_new ("L'agneau commence :");
+  gtk_widget_show (label24);
+  gtk_fixed_put (GTK_FIXED (fixed3), label24, 56, 256);
+  gtk_widget_set_size_request (label24, 152, 16);
 
-  radiobutton7 = gtk_radio_button_new_with_mnemonic (NULL, "Jou\303\251 par l'ordinateur");
-  gtk_widget_show (radiobutton7);
-  gtk_fixed_put (GTK_FIXED (fixed3), radiobutton7, 56, 200);
-  gtk_widget_set_size_request (radiobutton7, 160, 24);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton7), radiobutton7_group);
-  radiobutton7_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton7));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radiobutton7), TRUE);
+  label23 = gtk_label_new ("<b>Positionnement</b>");
+  gtk_widget_show (label23);
+  gtk_fixed_put (GTK_FIXED (fixed3), label23, 30, 224);
+  gtk_widget_set_size_request (label23, 120, 24);
+  gtk_label_set_use_markup (GTK_LABEL (label23), TRUE);
 
-  radiobutton5 = gtk_radio_button_new_with_mnemonic (NULL, "Vrai joueur");
-  gtk_widget_show (radiobutton5);
-  gtk_fixed_put (GTK_FIXED (fixed3), radiobutton5, 56, 144);
-  gtk_widget_set_size_request (radiobutton5, 160, 24);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton5), radiobutton7_group);
-  radiobutton7_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton5));
+  pos_agneau_bas = gtk_radio_button_new_with_mnemonic (NULL, "en haut");
+  gtk_widget_show (pos_agneau_bas);
+  gtk_fixed_put (GTK_FIXED (fixed3), pos_agneau_bas, 80, 304);
+  gtk_widget_set_size_request (pos_agneau_bas, 105, 21);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (pos_agneau_bas), pos_agneau_bas_group);
+  pos_agneau_bas_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (pos_agneau_bas));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pos_agneau_bas), TRUE);
 
-  label15 = gtk_label_new ("<b>Choisis ton camp et entre ton nom</b>");
-  gtk_widget_show (label15);
-  gtk_fixed_put (GTK_FIXED (fixed3), label15, 24, 8);
-  gtk_widget_set_size_request (label15, 256, 24);
-  gtk_label_set_use_markup (GTK_LABEL (label15), TRUE);
+  pos_agneau_haut = gtk_radio_button_new_with_mnemonic (NULL, "en bas");
+  gtk_widget_show (pos_agneau_haut);
+  gtk_fixed_put (GTK_FIXED (fixed3), pos_agneau_haut, 80, 280);
+  gtk_widget_set_size_request (pos_agneau_haut, 105, 21);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (pos_agneau_haut), pos_agneau_bas_group);
+  pos_agneau_bas_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (pos_agneau_haut));
 
-  radiobutton4 = gtk_radio_button_new_with_mnemonic (NULL, "Vrai joueur");
-  gtk_widget_show (radiobutton4);
-  gtk_fixed_put (GTK_FIXED (fixed3), radiobutton4, 56, 56);
-  gtk_widget_set_size_request (radiobutton4, 160, 24);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton4), radiobutton3_group);
-  radiobutton3_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton4));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radiobutton4), TRUE);
+  agneau_radio_joueur = gtk_radio_button_new_with_mnemonic (NULL, "Vrai joueur");
+  gtk_widget_show (agneau_radio_joueur);
+  gtk_fixed_put (GTK_FIXED (fixed3), agneau_radio_joueur, 56, 56);
+  gtk_widget_set_size_request (agneau_radio_joueur, 160, 24);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (agneau_radio_joueur), agneau_radio_joueur_group);
+  agneau_radio_joueur_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (agneau_radio_joueur));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (agneau_radio_joueur), TRUE);
+
+  agneau_radio_ordi = gtk_radio_button_new_with_mnemonic (NULL, "Jou\303\251 par l'ordinateur");
+  gtk_widget_show (agneau_radio_ordi);
+  gtk_fixed_put (GTK_FIXED (fixed3), agneau_radio_ordi, 56, 104);
+  gtk_widget_set_size_request (agneau_radio_ordi, 160, 24);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (agneau_radio_ordi), agneau_radio_joueur_group);
+  agneau_radio_joueur_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (agneau_radio_ordi));
+
+  loups_radio_joueur = gtk_radio_button_new_with_mnemonic (NULL, "Vrai joueur");
+  gtk_widget_show (loups_radio_joueur);
+  gtk_fixed_put (GTK_FIXED (fixed3), loups_radio_joueur, 56, 144);
+  gtk_widget_set_size_request (loups_radio_joueur, 160, 24);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (loups_radio_joueur), loups_radio_joueur_group);
+  loups_radio_joueur_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (loups_radio_joueur));
+
+  loups_radio_ordi = gtk_radio_button_new_with_mnemonic (NULL, "Jou\303\251 par l'ordinateur");
+  gtk_widget_show (loups_radio_ordi);
+  gtk_fixed_put (GTK_FIXED (fixed3), loups_radio_ordi, 56, 200);
+  gtk_widget_set_size_request (loups_radio_ordi, 160, 24);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (loups_radio_ordi), loups_radio_joueur_group);
+  loups_radio_joueur_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (loups_radio_ordi));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (loups_radio_ordi), TRUE);
 
   dialog_action_area2 = GTK_DIALOG (jeusimple)->action_area;
   gtk_widget_show (dialog_action_area2);
@@ -197,6 +228,19 @@ create_jeusimple (void)
   gtk_widget_show (label18);
   gtk_box_pack_start (GTK_BOX (hbox8), label18, FALSE, FALSE, 0);
 
+  g_signal_connect_swapped ((gpointer) agneau_radio_joueur, "toggled",
+                            G_CALLBACK (on_agneau_radio_joueur_toggled),
+                            GTK_OBJECT (nom_agneau_box));
+  g_signal_connect_swapped ((gpointer) agneau_radio_ordi, "toggled",
+                            G_CALLBACK (on_agneau_radio_ordi_toggled),
+                            GTK_OBJECT (nom_agneau_box));
+  g_signal_connect_swapped ((gpointer) loups_radio_joueur, "toggled",
+                            G_CALLBACK (on_loups_radio_joueur_toggled),
+                            GTK_OBJECT (nom_loups_box));
+  g_signal_connect_swapped ((gpointer) loups_radio_ordi, "toggled",
+                            G_CALLBACK (on_loups_radio_ordi_toggled),
+                            GTK_OBJECT (nom_loups_box));
+
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (jeusimple, jeusimple, "jeusimple");
   GLADE_HOOKUP_OBJECT_NO_REF (jeusimple, dialog_vbox2, "dialog_vbox2");
@@ -204,16 +248,20 @@ create_jeusimple (void)
   GLADE_HOOKUP_OBJECT (jeusimple, nom_agneau_box, "nom_agneau_box");
   GLADE_HOOKUP_OBJECT (jeusimple, label14, "label14");
   GLADE_HOOKUP_OBJECT (jeusimple, entry5, "entry5");
-  GLADE_HOOKUP_OBJECT (jeusimple, hbox11, "hbox11");
+  GLADE_HOOKUP_OBJECT (jeusimple, nom_loups_box, "nom_loups_box");
   GLADE_HOOKUP_OBJECT (jeusimple, label22, "label22");
   GLADE_HOOKUP_OBJECT (jeusimple, entry6, "entry6");
+  GLADE_HOOKUP_OBJECT (jeusimple, label15, "label15");
   GLADE_HOOKUP_OBJECT (jeusimple, label16, "label16");
   GLADE_HOOKUP_OBJECT (jeusimple, label13, "label13");
-  GLADE_HOOKUP_OBJECT (jeusimple, radiobutton3, "radiobutton3");
-  GLADE_HOOKUP_OBJECT (jeusimple, radiobutton7, "radiobutton7");
-  GLADE_HOOKUP_OBJECT (jeusimple, radiobutton5, "radiobutton5");
-  GLADE_HOOKUP_OBJECT (jeusimple, label15, "label15");
-  GLADE_HOOKUP_OBJECT (jeusimple, radiobutton4, "radiobutton4");
+  GLADE_HOOKUP_OBJECT (jeusimple, label24, "label24");
+  GLADE_HOOKUP_OBJECT (jeusimple, label23, "label23");
+  GLADE_HOOKUP_OBJECT (jeusimple, pos_agneau_bas, "pos_agneau_bas");
+  GLADE_HOOKUP_OBJECT (jeusimple, pos_agneau_haut, "pos_agneau_haut");
+  GLADE_HOOKUP_OBJECT (jeusimple, agneau_radio_joueur, "agneau_radio_joueur");
+  GLADE_HOOKUP_OBJECT (jeusimple, agneau_radio_ordi, "agneau_radio_ordi");
+  GLADE_HOOKUP_OBJECT (jeusimple, loups_radio_joueur, "loups_radio_joueur");
+  GLADE_HOOKUP_OBJECT (jeusimple, loups_radio_ordi, "loups_radio_ordi");
   GLADE_HOOKUP_OBJECT_NO_REF (jeusimple, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (jeusimple, cancelbutton2, "cancelbutton2");
   GLADE_HOOKUP_OBJECT (jeusimple, alignment9, "alignment9");
