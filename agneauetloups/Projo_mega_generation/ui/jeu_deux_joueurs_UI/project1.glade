@@ -18,6 +18,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">True</property>
 
   <child internal-child="vbox">
@@ -256,7 +257,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox11">
+	    <widget class="GtkHBox" id="nom_loups_box">
 	      <property name="width_request">32</property>
 	      <property name="height_request">16</property>
 	      <property name="visible">True</property>
@@ -318,6 +319,32 @@
 	  </child>
 
 	  <child>
+	    <widget class="GtkLabel" id="label15">
+	      <property name="width_request">256</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Choisis ton camp et entre ton nom&lt;/b&gt;</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">True</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
+	    </widget>
+	    <packing>
+	      <property name="x">24</property>
+	      <property name="y">8</property>
+	    </packing>
+	  </child>
+
+	  <child>
 	    <widget class="GtkLabel" id="label16">
 	      <property name="width_request">64</property>
 	      <property name="height_request">24</property>
@@ -370,72 +397,37 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkRadioButton" id="radiobutton3">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
+	    <widget class="GtkLabel" id="label24">
+	      <property name="width_request">152</property>
+	      <property name="height_request">16</property>
 	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">False</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
+	      <property name="label" translatable="yes">L'agneau commence :</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="x">56</property>
-	      <property name="y">104</property>
+	      <property name="y">256</property>
 	    </packing>
 	  </child>
 
 	  <child>
-	    <widget class="GtkRadioButton" id="radiobutton7">
-	      <property name="width_request">160</property>
+	    <widget class="GtkLabel" id="label23">
+	      <property name="width_request">120</property>
 	      <property name="height_request">24</property>
 	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">True</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">200</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkRadioButton" id="radiobutton5">
-	      <property name="width_request">160</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Vrai joueur</property>
-	      <property name="use_underline">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
-	      <property name="active">False</property>
-	      <property name="inconsistent">False</property>
-	      <property name="draw_indicator">True</property>
-	      <property name="group">radiobutton7</property>
-	    </widget>
-	    <packing>
-	      <property name="x">56</property>
-	      <property name="y">144</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkLabel" id="label15">
-	      <property name="width_request">256</property>
-	      <property name="height_request">24</property>
-	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">&lt;b&gt;Choisis ton camp et entre ton nom&lt;/b&gt;</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Positionnement&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -451,13 +443,13 @@
 	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
-	      <property name="x">24</property>
-	      <property name="y">8</property>
+	      <property name="x">30</property>
+	      <property name="y">224</property>
 	    </packing>
 	  </child>
 
 	  <child>
-	    <widget class="GtkRadioButton" id="radiobutton4">
+	    <widget class="GtkRadioButton" id="agneau_radio_joueur">
 	      <property name="width_request">160</property>
 	      <property name="height_request">24</property>
 	      <property name="visible">True</property>
@@ -469,11 +461,113 @@
 	      <property name="active">True</property>
 	      <property name="inconsistent">False</property>
 	      <property name="draw_indicator">True</property>
-	      <property name="group">radiobutton3</property>
 	    </widget>
 	    <packing>
 	      <property name="x">56</property>
 	      <property name="y">56</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="agneau_radio_ordi">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <property name="group">agneau_radio_joueur</property>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">104</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="loups_radio_joueur">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Vrai joueur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">144</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="loups_radio_ordi">
+	      <property name="width_request">160</property>
+	      <property name="height_request">24</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Joué par l'ordinateur</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">True</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <property name="group">loups_radio_joueur</property>
+	    </widget>
+	    <packing>
+	      <property name="x">56</property>
+	      <property name="y">200</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="pos_agneau_bas">
+	      <property name="width_request">105</property>
+	      <property name="height_request">21</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">en haut</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">True</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	    </widget>
+	    <packing>
+	      <property name="x">80</property>
+	      <property name="y">304</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkRadioButton" id="pos_agneau_haut">
+	      <property name="width_request">105</property>
+	      <property name="height_request">21</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">en bas</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	      <property name="group">pos_agneau_bas</property>
+	    </widget>
+	    <packing>
+	      <property name="x">80</property>
+	      <property name="y">280</property>
 	    </packing>
 	  </child>
 	</widget>
