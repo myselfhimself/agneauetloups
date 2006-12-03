@@ -283,7 +283,6 @@ int save_game(t_game *game, char *path);
 t_wordlist *get_themes_files(char *extension);
 GtkWidget* create_wintheme();
 GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name);
-void glade_set_atk_action_description(AtkAction *action, const gchar *action_name, const gchar *description);
 void wintheme();
 void go_back(GtkWidget *emitter, gpointer null);
 void go_save(GtkWidget *emitter, t_game *game);

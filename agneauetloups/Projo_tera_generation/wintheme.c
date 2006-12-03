@@ -1,12 +1,18 @@
 #include "main.h"
 
+
+
 void wintheme()
 {
+  /** - affiche la fenetre pour le choix des thèmes\n
+  */
   gtk_widget_show_all(GTK_WINTHEME);
 }
 
 void uwintheme()
 {
+  /** - cache la fenetre pour le choix des thèmes\n
+  */
   gtk_widget_hide(GTK_WINTHEME);
 }
 
@@ -18,12 +24,26 @@ void activetheme(GtkWidget *widget)
      int i,j;
      table = gtk_widget_get_parent(widget);
      widgets = gtk_container_get_children(GTK_CONTAINER(table));
+     /** - récupère le texte sélectionné\n
+     */
      gchar *txt = gtk_combo_box_get_active_text(GTK_COMBO_BOX((GtkWidget*) g_list_nth_data(widgets, 6)));
      if(strcmp(txt,"") != 0)
      {
+         /** - redéfini le chemin des images en fonction du thème\n
+         */
          init_OS_path();
          strcat(PATH,txt);
          strcat(PATH,"/");
+         /** - si le jeu est créé, pour chaque case :\n
+         * -# retire l'ancienne GtkImage\n
+         * -# défini par quelle case elle doit être remplacée\n
+         * -# recréé un GtkImage avec la nouvelle image\n
+         * -# affiche l'image\n
+         * - si le jeu est créé, pour chaque position des pions :\n
+         * -# superpose l'image du pion sur l'image du terrain\n
+         * -# affiche l'image\n
+         * - redimensionne la fenetre à la taille des images\n
+         */
          if(*GAME != NULL)
          {
              for(i=0;i<10;i++)
@@ -55,6 +75,12 @@ void refreshpreview(GtkWidget *widget, GtkWidget *table)
      GList *widgets;
      char img[128];
      widgets = gtk_container_get_children(GTK_CONTAINER(table));
+     /** - récupère le texte sélectionné\n
+     * - supprime les anciennes images d'aperçues\n
+     * - charge les nouvelles images\n
+     * - attache les images à la table de la fenetre\n
+     * - affiche le tout\n
+     */
      gchar *txt = gtk_combo_box_get_active_text(GTK_COMBO_BOX(widget));
      if(strcmp(txt,"") != 0)
      {
@@ -84,29 +110,6 @@ void refreshpreview(GtkWidget *widget, GtkWidget *table)
          
          gtk_widget_show_all(table);
      }
-}
-
-GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
-{
-  GtkWidget *parent, *found_widget;
-  for (;;)
-    {
-      if (GTK_IS_MENU (widget))
-        parent = gtk_menu_get_attach_widget (GTK_MENU (widget));
-      else
-        parent = widget->parent;
-      if (!parent)
-        parent = (GtkWidget*) g_object_get_data (G_OBJECT (widget), "GladeParentKey");
-      if (parent == NULL)
-        break;
-      widget = parent;
-    }
-
-  found_widget = (GtkWidget*) g_object_get_data (G_OBJECT (widget),
-                                                 widget_name);
-  if (!found_widget)
-    g_warning ("Widget not found: %s", widget_name);
-  return found_widget;
 }
 
 GtkWidget *create_wintheme()
@@ -177,17 +180,6 @@ GtkWidget *create_wintheme()
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT_NO_REF (window1, window1, "window1");
-  GLADE_HOOKUP_OBJECT (window1, table1, "table1");
-  GLADE_HOOKUP_OBJECT (window1, combobox, "combobox");
-  GLADE_HOOKUP_OBJECT (window1, image3, "image3");
-  GLADE_HOOKUP_OBJECT (window1, image1, "image1");
-  GLADE_HOOKUP_OBJECT (window1, image4, "image4");
-  GLADE_HOOKUP_OBJECT (window1, image2, "image2");
-  GLADE_HOOKUP_OBJECT (window1, refresh, "refresh");
-  GLADE_HOOKUP_OBJECT (window1, close, "close");
-  
   return window1;
 }
 
