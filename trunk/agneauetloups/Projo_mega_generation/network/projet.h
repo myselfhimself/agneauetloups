@@ -76,7 +76,7 @@ t_history;
 //you_dont_play : c'est à moi de jouer, tu ne joues pas
 //game_over : fin de de jeu. info en + : int : si c'est le récepteur du packet qui a gagné.
 //play_again : dis au joueur auquel on envoit le paquet qu'on veut rejouer
-enum{NEW_POS,CHAT,NAME,CHOICE_REQUEST,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
+enum{NEW_POS,CHAT,NAME,PLEASE_CHOOSE,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
 #define PACKET_SIZE 100*sizeof(char)
 #define CONTENT_SIZE PACKET_SIZE-sizeof(int)
 //packet d'une taille max de 100*sizeof(char), avec sizeof(char) = 1
