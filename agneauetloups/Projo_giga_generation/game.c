@@ -1,5 +1,24 @@
 #include "main.h"
 
+/*
+void next_turn(t_game* game)
+{
+	//si on est en mode réseau
+	if(game->use_network)
+	{
+		//envoi de la position
+		network_send(packet_make(NEW_POS,game->data.now));
+		//lock du terrain
+		game_lock(game,TRUE); 
+		//pas de vérification s'il y a fin de partie ou pas
+		//c'est l'autre joueur qui le fera en recevant NEW_POS	
+	}
+	//si on est en mode local
+	else
+	{
+		//on échange le joueur devant jouer
+				
+*/
 void make_movement(t_game *game,int x1,int y1,int x2,int y2)
 {
     int i=0, type;
