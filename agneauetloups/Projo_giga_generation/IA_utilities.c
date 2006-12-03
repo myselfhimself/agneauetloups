@@ -201,7 +201,7 @@ int lamb_won(t_association pawn[6])
 int game_is_over(t_association pawn[6])
 {
 	int ret=0;
-	/** - si un gagnant retourne 1\n
+	/** - si un gagnant retourne : 1 si c'est l'agneau, -1 les loups\n
 	* - sinon retourne 0\n
 	*/
 	if(lamb_won(pawn))
