@@ -141,7 +141,7 @@ GtkWidget *create_wintheme()
   fichier = get_themes_files("theme");
   for(i=0;i<fichier->nbwords;i++)
   {
-      fichier->word[i][strlen(fichier->word[i])-7] = '\0';
+      fichier->word[i][strlen(fichier->word[i])-6-(OPERATING_SYSTEM==WINDOWS)] = '\0';
       gtk_combo_box_append_text (GTK_COMBO_BOX(combobox), fichier->word[i]);
       free(fichier->word[i]);
   }
