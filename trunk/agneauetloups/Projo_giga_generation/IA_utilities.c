@@ -204,6 +204,9 @@ int game_is_over(t_association pawn[6])
 	/** - si un gagnant retourne 1\n
 	* - sinon retourne 0\n
 	*/
-    if(lamb_won(pawn) || wolves_won(pawn)) ret = 1;
+	if(lamb_won(pawn))
+		ret = 1;
+	else if(wolves_won(pawn))
+		ret = -1;
 	return ret;
 }
