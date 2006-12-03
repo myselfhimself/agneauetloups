@@ -16,7 +16,7 @@ t_wordlist *get_themes_files(char *extension)
 	}
 	else
 	{
-		sprintf(command,"ls --file-type themes\\*.%s > fichiers.list",extension);
+		sprintf(command,"ls  themes | grep .%s > fichiers.list",extension);
 	}
 	system(command);
 	fp=fopen("fichiers.list","rb");
