@@ -31,7 +31,7 @@ void afficher_console(t_game *game)
     printf("\n\n");
 }
 
-void select(GtkWidget *eventbox,gint R,gint V,gint B)
+void _select(GtkWidget *eventbox,gint R,gint V,gint B)
 {
     GdkPixbuf *pixbuf;
     gint w,h;

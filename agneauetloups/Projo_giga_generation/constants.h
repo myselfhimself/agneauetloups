@@ -27,6 +27,7 @@
 #define WOLF         1
 #define HUMAN        0
 #define ARTIFICIAL   1
+//pour l'IA (valeur retournée pas IA)
 #define TOP_LEFT     0
 #define TOP_RIGHT    1
 #define BOTTOM_LEFT  2
@@ -37,11 +38,11 @@
 #define LINUX 0
 #define WINDOWS 1
 
-/** - globale pour stocker le chemin d'acc�s aux fichiers\n
+/** - globale pour stocker le chemin d'accès aux fichiers\n
 */
 char PATH[128];
 
-/** - d�finition du syst�me\n
+/** - définition du système\n
 */
 
 #ifdef _WIN32
@@ -51,5 +52,19 @@ char PATH[128];
 #ifndef _WIN32
 #define OPERATING_SYSTEM LINUX
 #endif
+
+//defines des state de t_connection
+enum{NETWORK_OPEN,NETWORK_CLOSED};
+
+
+enum{NEW_POS,CHAT,NAME,PLEASE_CHOOSE,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
+///types de packets
+//new_pos. info en + : t_history
+//chat. info en + : le message str (char*)
+//please_choose : quel joueur tu veux faire ?
+//what_you_are : tu feras tel joueur (dans un deuxième temps). info en + : int du camp qu'on doit jouer
+//you_dont_play : c'est à moi de jouer, tu ne joues pas
+//game_over : fin de de jeu. info en + : int : si c'est le récepteur du packet qui a gagné.
+//play_again : dis au joueur auquel on envoit le paquet qu'on veut rejouer
 
 #endif
