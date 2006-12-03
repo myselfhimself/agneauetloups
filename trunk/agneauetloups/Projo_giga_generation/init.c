@@ -63,6 +63,14 @@ int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1t
 	thegame = (t_game *) malloc(sizeof(t_game));
 	if(thegame == NULL) return ERR_ALLOC_GAME;
 	*game = thegame;
+
+	/** - sensibilité du terrain aux clics\n
+	*/
+	thegame->locked = FALSE;
+
+	/** - utilisation du réseau
+	*/
+	thegame->use_network = FALSE;
 	
     /** - initialisation des joueurs\n
 	*/

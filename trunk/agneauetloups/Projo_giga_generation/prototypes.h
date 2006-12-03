@@ -155,7 +155,7 @@ void gtk_image_superimpose(GtkWidget *eventbox,const gchar *img);
 // dans tests.c
 t_association *changeposition(t_association pawn[6], int pawntomove,int direction);
 void afficher_console(t_game *game);
-void select(GtkWidget *eventbox,gint R,gint V,gint B);
+void _select(GtkWidget *eventbox,gint R,gint V,gint B);
 
 // #################################################
 // #                 dans game.c                   #
@@ -187,6 +187,58 @@ void onrelease(GtkWidget *emitter,GdkEventButton *event,t_game *game);
 * \return aucun
 */
 void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game);
+
+/** \fn int current_player_id(t_game* game)
+* Objectif(s): pouvoir trouver des informations sur le joueur en cours facilement
+* \param [in] t_game* game structure principale
+*
+* \return l'index dans le tableau game->players du joueur en cours
+*/
+int current_player_id(t_game* game);
+
+/** \fn char* current_player_name(t_game * game)
+* Objectif(s): pouvoir un écrire un message contenant le nom du joueur en cours facilement
+* \param [in] t_game* game structure principale
+*
+* \return un pointeur sur le nom du joueur en cours
+*/
+char* current_player_name(t_game * game);
+
+
+/** \fn t_player* current_player(t_game* game)
+* Objectif(s): avoir un pointeur sans trop réfléchir sur une structure de données du joueur en cours
+* \param [in] t_game* game structure principale
+*
+* \return un pointeur sur le t_player du joueur en cours
+*/
+t_player* current_player(t_game* game);
+
+/** \fn void game_lock(t_game* game, gboolean do_lock)
+* Objectif(s): changer la sensibilité du terrain aux clics sans réfléchir
+* \param [in] t_game* game structure principale
+*
+* \return aucun
+*/
+void game_lock(t_game* game, gboolean do_lock);
+
+
+/** \fn void game_lock(t_game* game, gboolean do_lock)
+* Objectif(s): savoir si le terrain est insensible aux clics (ex : en début de on_click)
+* \param [in] t_game* game structure principale
+*
+* \return aucun
+*/
+gboolean game_locked(t_game* game);
+
+//gestionnaire de joueurs
+//gboolean a un entête bizarre pour pouvoir être rappelé par g_timeout_add
+/** \fn gboolean next_turn(gpointer _game);
+* Objectif(s): donner tour à tour aux joueurs les moyens de jouer (local ou réseau).
+* \param [in] gpointer _game pointeur casté en internet sur la structure principale
+*
+* \return FALSE, utile uniquement à g_timeout_add qui invoque cette fonction, cassant la pile d'appels
+*/
+gboolean next_turn(gpointer _game);
 
 // #################################################
 // #                 dans history.c                #
@@ -239,8 +291,20 @@ void onquit(gpointer data, guint callback_action,GtkWidget *widget);
 */
 void onabout(gpointer data, guint callback_action,GtkWidget *widget);
 
+//change le texte dans la barre de status
+/** \fn void set_status_text(char* format_str,char* str)
+*
+* Objectif(s): changer le texte de la barre de status
+*
+* \param [in] chaîne de formattage
+* \param [in] chaîne éventuellement utilisée dans la chaîne de formattage
+*
+* \return aucun
+*/
+void set_status_text(char* format_str,char* str);
+
 // #################################################
-// #                                                          dans init.c                                                                  #
+// #         dans init.c
 // #################################################
 /** \fn GtkWidget *window_init(GtkWidget **win)
 *
@@ -280,5 +344,72 @@ int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1t
 int init_OS_path();
 
 int save_game(t_game *game, char *path);
+
+// #################################################
+// #                   dans network.c             #
+// #################################################
+
+///active le mode réseau, initialise des variables réseau
+void network_init(t_game* game);
+
+///tente de rendre un socket réutilisable sur une même machine
+///utile dans les cas où un socket n'avait pas été fermé mais est bloqué quand même
+///retourne 1 si succès ou 0 sinon
+int network_reuse_socket(int sockfd);
+
+///ferme/nettoie une connectino qui ne nous sert plus
+///retourne 1 si succès, 0 si rien à faire
+int network_connection_close(t_connection* connection);
+
+///à utiliser dans les différentes fonctions d'écriture : regarde si network_init a été exécuté
+///regarde si la structure pointée par le t_connection* est bien inutilisée
+///met une erreur dans la console si ce n'est pas le cas
+int network_check_unused(t_connection* connection);
+
+///les champs du pointeur t_connection* donné
+void network_connection_fill(t_connection* connection,int sockdf,struct sockaddr_in* addr);
+
+//retravaillé du projet happycoders/libsocket
+///essaye d'allouer et remplir une structure d'adresse inet correspondante aux host et port
+///retourne le pointeur sur cette structure ou NULL si le domaine host n'est pas reconnu
+struct sockaddr_in* network_make_address(char* host, char* port);
+
+//----------------------FONCTIONS CLIENT------------------------------
+///tente de se connecter à un serveur
+int network_client_run(char* ip,char* port);
+
+//code utilisé du tutoriel sur les sockets de "beej"
+///envoie une donnée à l'autre partie
+///s'occupe d'envoyer tout le contenu en gérant les cas où les envois ne peuvent se faire en une fois(problème matériel)
+///renvoie 1 si le transfert a marché ou 0 s'il y a eu des erreurs
+int network_send(t_packet*);
+
+///cette fonction ne doit pas être lancée par la main. Voir network_main qui crée un thread pour elle.
+///reçoit en paramètre un pointeur sur la fonction à appeler quand réception d'un paquet en lui passant le paquet en paramètre
+void* network_receive(void* on_recv);
+
+///lance un thread qui se charge d'écouter les réceptions et se quitte (sans quitter le thread)
+///le premier paramètre est un pointeur sur la fonction callback à appeler quand une donnée est reçue
+//la fct callback doit retourner un void* parce que pthread n'accepte que des fonctions avec un tel prototype
+int network_main(int (*on_recv) (t_packet*));
+
+void network_simple_chat();
+
+t_packet* packet_make(int type, void* content);
+void packet_diplay(t_packet*);
+
+int network_exit();
+
+//----------------------FONCTIONS SERVEUR-----------------------------
+
+///initialise un serveur : ouvre un port local
+///retourne succes : 1, echec : 0
+///network_init doit avoir été lancé
+int network_server_run(char* port);
+
+int network_server_shutdown();
+
+///une fois network_server_init lancé, écoute les connections sur le socket ouvert et en établit une seule
+void* network_server_accept(void * none);
 
 #endif

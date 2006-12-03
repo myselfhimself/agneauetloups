@@ -3,6 +3,37 @@
 
 #include "main.h"
 
+
+typedef struct
+{
+	int socket;
+	//attention c'est un pointeur !
+	struct sockaddr_in* address;
+	int state;
+}
+t_connection;
+
+typedef struct
+{
+	int im_server;
+	//connection de type serveur, pour √©couter une unique connection. Sera ferm√©e une fois une connection trouv√©e
+	t_connection server;
+	//connection de type client/client utilis√©e dans tous les cas
+	t_connection client;
+}
+t_network;
+
+#define PACKET_SIZE 100*sizeof(char)
+#define CONTENT_SIZE PACKET_SIZE-sizeof(int)
+//packet d'une taille max de 100*sizeof(char), avec sizeof(char) = 1
+typedef struct
+{
+	int type;// int <=> 4 octets (sizeof) <=> unsigned int <=> long : utiliser htonl
+	char content[CONTENT_SIZE]; //max de 96 octets ici ; char <=> 1 octet
+	//remarque : content est de type char*
+}
+t_packet;
+
 /** \struct t_player
 * \brief type et animal d'un joueur
 *  */
@@ -13,12 +44,12 @@ typedef struct
 }t_player;
 
 /** \struct  t_coords
-* \brief abcisse et ordonnÈe d'une position
+* \brief abcisse et ordonn√©e d'une position
 *  */
 typedef struct
 {
 	int x;/**<  abscisse */
-	int y;/**<  ordonnÈe */
+	int y;/**<  ordonn√©e */
 }t_coords;
 
 /** \struct t_association
@@ -26,8 +57,8 @@ typedef struct
 *  */
 typedef struct
 {
-	GtkWidget *eventbox;/**< eventbox associÈe ‡ la position */
-	t_coords position;/**< coordonnÈes de l'eventbox associÈe */
+	GtkWidget *eventbox;/**< eventbox associ√©e √† la position */
+	t_coords position;/**< coordonn√©es de l'eventbox associ√©e */
 }t_association;
 
 /** \struct t_history
@@ -35,20 +66,20 @@ typedef struct
 *  */
 typedef struct
 {
-	t_coords wolf[5];/**< coordonnÈes des loups */
-	t_coords lamb;/**< coordonnÈes de l'agneau */
+	t_coords wolf[5];/**< coordonn√©es des loups */
+	t_coords lamb;/**< coordonn√©es de l'agneau */
 	gboolean curplayer;/**< joueur en cours */
 }t_history;
 
 /** \struct t_data
-* \brief donnÈes du jeu en cours
+* \brief donn√©es du jeu en cours
 *  */
 typedef struct
 {
 	gboolean orientation;/**< orientation du terrain (loups/agneau en haut/bas)  */
-	t_history *now;/**< Ètat du plateau */
-	GList *history;/**< historique des Ètats du plateau */
-	t_association *selection;/**< sÈlection en cours (pour dÈplacement) */
+	t_history *now;/**< √©tat du plateau */
+	GList *history;/**< historique des √©tats du plateau */
+	t_association *selection;/**< s√©lection en cours (pour d√©placement) */
 	char *player[2];/**< noms des joueurs */
 }t_data;
 
@@ -57,10 +88,14 @@ typedef struct
 *  */
 typedef struct
 {
+	gboolean locked;/**< dit si le plateau de jeu est insensible aux clics (partie r√©seau notamment) */
+	gboolean use_network;
+	t_network network;
 	t_player players[2];/**< informations sur les joueurs */
-	t_association eventbox[10][10];/**< associations entre les eventbox (graphique) et les positions rÈelles (mÈmoire) */
+	t_association eventbox[10][10];/**< associations entre les eventbox (graphique) et les positions r√©elles (m√©moire) */
 	t_data data;/**< emsemble des infos de la partie */
 	t_association pawn[6];/**< emplacement des animaux */
 }t_game;
+
 
 #endif
