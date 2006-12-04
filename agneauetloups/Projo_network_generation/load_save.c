@@ -22,10 +22,19 @@ void load_game(t_game **gameadress,GtkWidget *table)
 	int historynb;
 	sprintf(path,"%ssave.ece",PATH);
 	/** ouvre le fichier de sauvegarde\n
+	* - lit les infos sur les joueurs\n
+	* - lit l'orientation du terrain\n
+	* - lit les noms des joueurs\n
+	* - lit la sélection en cours\n
+	* - créé une partie avec les paramètres chargés\n
+	* - lit et enregistre le terrain actuel\n
+	* - lit et enregistre l'historique\n
+	* ferme le fichier de sauvegarde\n
+	*  réaffiche le terrain\n
 	*/
 	if(fp=fopen(path,"rb"))
     {                	
-        fread(joueur,sizeof(t_player),2,fp);
+		fread(joueur,sizeof(t_player),2,fp);
 		fread(&orientation,sizeof(gboolean),1,fp);
 		i=-1;
 		do
@@ -64,9 +73,7 @@ void load_game(t_game **gameadress,GtkWidget *table)
 			game->pawn[i].position.y = game->data.now->wolf[i-1].y;
 			game->pawn[i].eventbox = game->eventbox[game->data.now->wolf[i-1].x][game->data.now->wolf[i-1].y].eventbox;
 		}
-		/** - chargement des images des pions\n
-	    */
-	    for(i=0;i<100;i++)
+		for(i=0;i<100;i++)
 	    {
             if((abs(9*game->data.orientation - i%10)+abs(9*game->data.orientation - i/10))%2==0) sprintf(path2,"%s%s",PATH,"Bcase.BMP");
 			else sprintf(path2,"%s%s",PATH,"Ncase.BMP");
@@ -88,7 +95,15 @@ int save_game(char *path)
 	int count,whennull = -1,i;
 	FILE *fp;
 	t_game *game = GAME;
-	//GList *save = game->data.history;
+	/** ouvre le fichier de sauvegarde\n
+	* - écrit les infos sur les joueurs\n
+	* - écrit l'orientation du terrain\n
+	* - écrit les noms des joueurs\n
+	* - écrit la sélection en cours\n
+	* - écrit le terrain actuel\n
+	* - écrit l'historique\n
+	* ferme le fichier de sauvegarde\n
+	*/
 	if(fp=fopen(path,"wb"))
 	{
 		fwrite(&(game->players),sizeof(t_player),2,fp);
