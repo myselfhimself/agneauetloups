@@ -20,6 +20,8 @@ typedef struct
 	t_connection server;
 	//connection de type client/client utilisée dans tous les cas
 	t_connection client;
+	char* my_name;
+	char* others_name;
 }
 t_network;
 
@@ -33,6 +35,37 @@ typedef struct
 	//remarque : content est de type char*
 }
 t_packet;
+//enum{MOVEMENT,CHAT,NAME,PLEASE_CHOOSE,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
+//pour movement
+typedef struct
+{
+	int type;
+	t_movement movement;
+	char content[CONTENT_SIZE-sizeof(t_movement)];
+}
+t_packet_movement;
+
+//pour CHAT et NAME
+typedef struct
+{
+	int type;
+	char text[CONTENT_SIZE];
+}
+t_packet_text;
+
+//avec info utilisée : WHAT_YOU_ARE
+//avec info inutilisée : PLEASE_CHOOSE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN
+typedef struct
+{
+	int type;
+	int info;
+	char content[CONTENT_SIZE-sizeof(int)];
+}
+t_packet_simple;
+
+typedef struct
+{
+	
 
 /** \struct t_player
 * \brief type et animal d'un joueur
@@ -51,6 +84,12 @@ typedef struct
 	int x;/**<  abscisse */
 	int y;/**<  ordonnée */
 }t_coords;
+
+typedef struct
+{
+	t_coords before;
+	t_coords after;
+}t_movement;
 
 /** \struct t_association
 * \brief association entre une eventbox et une position
