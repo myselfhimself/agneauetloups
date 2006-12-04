@@ -57,6 +57,7 @@ typedef struct
 *  */
 typedef struct
 {
+	gboolean locked;/**< dit si le plateau de jeu est insensible aux clics (partie réseau notamment) */
 	t_player players[2];/**< informations sur les joueurs */
 	t_association eventbox[10][10];/**< associations entre les eventbox (graphique) et les positions réelles (mémoire) */
 	t_data data;/**< emsemble des infos de la partie */

@@ -75,6 +75,12 @@ int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1t
 	thegame->players[1].animal = player2animal;
 	if(player1animal == player2animal) return ERR_COMPATIBILITY;
 	
+	/** - sensibilité du terrain aux clics\n
+	*/
+	thegame->locked = FALSE;
+	/** - utilisation du réseau
+	*/
+	
 	/** - initialisation du terrain\n
 	* -# création des eventbox
 	* -# chargement des images
