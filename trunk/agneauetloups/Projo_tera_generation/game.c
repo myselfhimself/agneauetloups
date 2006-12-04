@@ -1,5 +1,79 @@
 #include "main.h"
 
+//retourne l'index dans le tableau game->players du joueur en cours
+int current_player_id(t_game* game)
+{
+	int a;
+	int current_animal;
+	int result;
+
+	current_animal = game->data.now->curplayer;
+	for(a=0;a<2;a++)
+	{
+		if(game->players[a].animal == current_animal)
+		{
+			result=a;
+			break;	
+		}
+	}
+	return result;
+}
+
+//retourne un pointeur sur le nom du joueur en cours
+char* current_player_name(t_game * game)
+{
+	return game->data.player[current_player_id(game)];
+}
+
+//retourne un pointeur sur le t_player du joueur en cours
+t_player* current_player(t_game* game)
+{
+	return &(game->players[current_player_id(game)]);
+}
+
+//change une variable de game pour que le click sur le terrain soit insensible
+void game_lock(t_game* game, gboolean do_lock)
+{
+	game->locked = do_lock;
+}
+
+//indique si le terrain est bloqué localement (clics insensibles)
+gboolean game_locked(t_game* game)
+{
+	return game->locked;
+}
+
+//gestionnaire de joueurs
+//gboolean a un entête bizarre pour pouvoir être rappelé par g_timeout_add
+gboolean next_turn(gpointer _game)
+{
+	t_game* game = (t_game*)_game;
+
+	{
+		//on n'échange pas l'animal du joueur devant jouer, c'est fait dans on_click
+		//si le joueur en cours (on sait son animal) est humain (pas l'IA)
+		if(current_player(game)->type == HUMAN)
+		{	
+			//on affiche que c'est son tour
+			set_status_text("C'est au tour de %s de jouer.",current_player_name(game));
+			//on le laisse jouer
+		}
+		//si c'est l'intelligence artificielle
+		else
+		{
+			//on la fait jouer directement
+			preIA(game,8);
+			//on fait appeler une seconde plus tard next_turn pour faire jouer le joueur suivant 
+			//ça laisse un délai si l'IA joue contre elle-même tour à tour
+			g_timeout_add(1000,next_turn,game);
+		}
+	}
+	//comme ça, g_timeout_add n'executera pas cette fonction plus d'une fois seulement
+	return FALSE;
+}
+
+
+
 void make_movement(t_game *game,int x1,int y1,int x2,int y2)
 {
     int i=0, type;
@@ -151,9 +225,8 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
                 sprintf(path,"%s%s",PATH,"lamb.BMP");
 	            gtk_image_superimpose(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox,path);
                 game->data.now->curplayer = WOLF;
-                // => appel du next_turn
                 afficher_console(game);
-                preIA(game,8);
+		g_timeout_add(1000,next_turn,game);
             }
         }
         else
@@ -194,8 +267,8 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
                 sprintf(path,"%s%s",PATH,"wolf.BMP");
 	            gtk_image_superimpose(game->eventbox[game->data.now->wolf[pos-1].x][game->data.now->wolf[pos-1].y].eventbox,path);
 				game->data.now->curplayer = LAMB;
-                // => appel du next_turn
                 afficher_console(game);
+		g_timeout_add(1000,next_turn,game);
             }
 		}
     }
