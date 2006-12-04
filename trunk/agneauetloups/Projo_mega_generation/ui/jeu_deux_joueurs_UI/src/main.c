@@ -10,8 +10,13 @@
 #include <gtk/gtk.h>
 
 #include "interface.h"
+#include "(null)"
 
-
+#ifdef G_OS_WIN32
+gchar *package_prefix = PACKAGE_PREFIX;
+gchar *package_data_dir = PACKAGE_DATA_DIR;
+gchar *package_locale_dir = PACKAGE_LOCALE_DIR;
+#endif
 
 int
 main (int argc, char *argv[])
@@ -19,10 +24,18 @@ main (int argc, char *argv[])
   GtkWidget *jeusimple;
 
   gchar *pixmap_dir;
-
+#ifdef G_OS_WIN32
+  package_prefix = g_win32_get_package_installation_directory (NULL, NULL);
+  package_data_dir = g_build_filename (package_prefix, "share", NULL);
+  package_locale_dir = g_build_filename (package_prefix, "share", "locale", NULL);
+#endif
 
   gtk_set_locale ();
   gtk_init (&argc, &argv);
+
+  pixmap_dir = g_build_filename (package_data_dir, PACKAGE, "pixmaps", NULL);
+  add_pixmap_directory (pixmap_dir);
+  g_free (pixmap_dir);
 
 
   /*
@@ -37,9 +50,23 @@ main (int argc, char *argv[])
 
   gtk_main ();
 
-
+#ifdef G_OS_WIN32
+  g_free (package_prefix);
+  g_free (package_data_dir);
+  g_free (package_locale_dir);
+#endif
 
   return 0;
 }
+#ifdef _MSC_VER
+#include <windows.h>
 
+int WINAPI WinMain(HINSTANCE hInstance,
+                   HINSTANCE hPrevInstance,
+                   LPSTR lpCmdLine,
+                   int nCmdShow)
+{
+  return main (__argc, __argv);
+}
+#endif
 
