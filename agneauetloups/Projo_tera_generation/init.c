@@ -24,7 +24,8 @@ GtkWidget *window_init(GtkWidget **win,t_game **game)
 	*win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(*win),0);
 	gtk_window_set_title(GTK_WINDOW(*win),"Projo tera generation");
-	gtk_window_set_position(GTK_WINDOW(*win),GTK_WIN_POS_CENTER);
+	//gtk_window_set_gravity(GTK_WINDOW(*win),GDK_GRAVITY_CENTER);
+	gtk_window_set_position(GTK_WINDOW(*win),GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_widget_realize(*win);
 	g_signal_connect(*win,"destroy",gtk_main_quit,NULL);
 	/** - création de la table 10*10\n

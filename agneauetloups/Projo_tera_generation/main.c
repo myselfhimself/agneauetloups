@@ -21,7 +21,8 @@ int main (int argc, char *argv[])
   
   //game_init(&game,table,"Joe",HUMAN,WOLF,"Bob",HUMAN,LAMB);
   //game_init(&game,table,"ooo",HUMAN,LAMB,"eee",HUMAN,WOLF);
-  load_game(&game,table,"save.ece");
+  game_init(&game,table,"IA1",ARTIFICIAL,LAMB,"IA2",ARTIFICIAL,WOLF);
+  //load_game(&game,table,"save.ece");
   /*button = gtk_button_new_with_label("back");
   gtk_table_attach_defaults(GTK_TABLE(table),button,10,11,9,10);
   g_signal_connect(button,"clicked",GTK_SIGNAL_FUNC(go_back),game);*/
@@ -35,6 +36,7 @@ int main (int argc, char *argv[])
   
   // Afficher et envoyer la sauce
   gtk_widget_show_all(win);
+  g_timeout_add(1000,next_turn,game);
   gtk_main();
   return 0;
 }
