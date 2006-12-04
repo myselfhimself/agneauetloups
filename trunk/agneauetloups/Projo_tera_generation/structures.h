@@ -65,6 +65,10 @@ typedef struct
 	GtkWidget *wintheme;
 }t_game;
 
-typedef struct {int nbwords;char **word;}t_wordlist;
+typedef struct
+{
+	int nbwords;
+	char **word;
+}t_wordlist;
 
 #endif

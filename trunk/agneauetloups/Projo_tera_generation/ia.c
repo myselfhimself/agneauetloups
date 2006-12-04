@@ -14,10 +14,10 @@ void preIA(t_game *game,int depth)
     int w5x = pawn[5].position.x;    int w5y = pawn[5].position.y;
     t0 = time(NULL);
 	/** si agneau :\n
-	* - si possible et pas trop ï¿½oignï¿½lancï¿½l'IA sur l'emplacement en haut ï¿½gauche\n
-	* - si possible et pas trop ï¿½oignï¿½lancï¿½l'IA sur l'emplacement en haut ï¿½droite\n
-	* - si possible et pas trop ï¿½oignï¿½lancï¿½l'IA sur l'emplacement en bas ï¿½gauche\n
-	* - si possible et pas trop ï¿½oignï¿½lancï¿½l'IA sur l'emplacement en bas ï¿½droite\n
+	* - si possible et pas trop éloigné lancé l'IA sur l'emplacement en haut à gauche\n
+	* - si possible et pas trop éloigné lancé l'IA sur l'emplacement en haut à droite\n
+	* - si possible et pas trop éloigné lancé l'IA sur l'emplacement en bas à gauche\n
+	* - si possible et pas trop éloigné lancé l'IA sur l'emplacement en bas à droite\n
 	*/
 	if(player == LAMB)
 	{
@@ -41,8 +41,8 @@ void preIA(t_game *game,int depth)
 	    t = time(NULL);
 	    printf("%d  %d\n%d  %d\n%ld sec\n",topleft,topright,bottomleft[0],bottomright[0],t-t0);
 	    sum = topleft + topright + bottomleft[0] + bottomright[0];
-	    /** - si la somme des probabilitï¿½ est jugï¿½ trop petite pour avoir de l'importance\n
-		* -# avancer alï¿½toirement, sur le devant si possible\n
+	    /** - si la somme des probabilités est jugée trop petite pour avoir de l'importance\n
+		* -# avancer aléatoirement, sur le devant si possible\n
 		*/
 		if(abs(sum)< 4000)
 	    {
@@ -52,9 +52,9 @@ void preIA(t_game *game,int depth)
             else if(possible_and_free(lx-1,ly-1,pawn)) make_movement(game,lx,ly,lx-1,ly-1);
             else if(possible_and_free(lx+1,ly-1,pawn)) make_movement(game,lx,ly,lx+1,ly-1);
         }
-		/** - si la somme des probabilitï¿½ est trï¿½ grande alors la solution est ï¿½idente et proche\n
-		* -# soit elle est en haut ï¿½gauche => essai d'y aller\n
-		* -# soit elle est en haut ï¿½droite => essai d'y aller\n
+		/** - si la somme des probabilités est très grande alors la solution est évidente et proche\n
+		* -# soit elle est en haut à gauche => essai d'y aller\n
+		* -# soit elle est en haut à droite => essai d'y aller\n
 		*/
         else if(sum>=199999900)
         {
@@ -64,7 +64,7 @@ void preIA(t_game *game,int depth)
             else if(possible_and_free(lx+1,ly-1,pawn)) make_movement(game,lx,ly,lx+1,ly-1);
         }
         else
-		/** - sinon allez vers la plus grande des possibilitï¿½\n
+		/** - sinon allez vers la plus grande des possibilités\n
 		*/
         {
              if(maxi(topleft,topright,bottomleft[0],bottomright[0])== topleft && possible_and_free(lx-1,ly+1,pawn)) make_movement(game,lx,ly,lx-1,ly+1);
@@ -84,8 +84,8 @@ void preIA(t_game *game,int depth)
     {
         /** si loups :\n
 		* - si loups en formation ligne\n
-		* -# trouver le prochain loup ï¿½dï¿½lacer\n
-		* -# le dï¿½lacer\n
+		* -# trouver le prochain loup à déplacer\n
+		* -# le déplacer\n
 		*/
 		if(wolves_in_line(game->pawn))
         {
@@ -95,7 +95,7 @@ void preIA(t_game *game,int depth)
         }
         else
         {
-            /** - sinon se dï¿½lacer vers la plus basse probabilitï¿½n
+            /** - sinon se déplacer vers la plus basse probabilité\n
 		    */
             for(i=1;i<6;i++)
             {
@@ -124,30 +124,29 @@ void preIA(t_game *game,int depth)
 int IA(int player,int depth,int lx,int ly,int w1x,int w1y,int w2x,int w2y,int w3x,int w3y,int w4x,int w4y,int w5x,int w5y)
 {
 	int count = 0,k;
-	int game_result;	
 	t_association pawn[6]={{NULL,{lx,ly}},{NULL,{w1x,w1y}},{NULL,{w2x,w2y}},{NULL,{w3x,w3y}},{NULL,{w4x,w4y}},{NULL,{w5x,w5y}}};
-	/** - si le jeu est terminï¿½n
-	* -# si l'agneau a gagnï¿½retourner un coefficient d'issue positif\n
-	* -# si les loups ont gagnï¿½ retourner un coefficient d'issue nï¿½atif\n
+	/** - si le jeu est terminé\n
+	* -# si l'agneau a gagné retourner un coefficient d'issue positif\n
+	* -# si les loups ont gagnés retourner un coefficient d'issue négatif\n
 	*/
-	game_result = game_is_over(pawn);	
-	switch(game_result)
-	{//si les agneaux on gagnï¿½		
-		case 1:	
-			count = importance(depth);
-			break;
-		//si les loups on gagnï¿½
-		case -1:
-			count = (-1 * importance(depth));
-			break;
-		default:
-		/** - si la profondeur maximale a ï¿½ï¿½atteinte retourner zï¿½o\n
-		*/
-		if(depth == 0) count = 0;
-		/** - si le joueur est agneau : rapeller l'IA rï¿½ursivement sur les 4 positions possibles\n
-		*/
-		else if(player == LAMB)
+	if(game_is_over(pawn))
+	{
+		if(lamb_won(pawn))
 		{
+			count = importance(depth);
+		}
+		else
+		{
+			count = (-1 * importance(depth));
+		}
+	}
+	/** - si la profondeur maximale a été atteinte retourner zéro\n
+	*/
+	else if(depth == 0) count = 0;
+	/** - si le joueur est agneau : rapeller l'IA récursivement sur les 4 positions possibles\n
+	*/
+	else if(player == LAMB)
+	{
 		if(possible_and_free(lx+1,ly+1,pawn) && isnt_too_far(lx+1,ly+1,pawn))
 			count += IA(WOLF,depth - 1,lx+1,ly+1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
 		if(possible_and_free(lx+1,ly-1,pawn) && isnt_too_far(lx+1,ly-1,pawn))
@@ -156,47 +155,46 @@ int IA(int player,int depth,int lx,int ly,int w1x,int w1y,int w2x,int w2y,int w3
 			count += IA(WOLF,depth - 1,lx-1,ly+1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
 		if(possible_and_free(lx-1,ly-1,pawn) && isnt_too_far(lx-1,ly-1,pawn))
 			count += IA(WOLF,depth - 1,lx-1,ly-1,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
-		}
-		/** - si le joueur est loup : rapeller l'IA rï¿½ursivement sur les 10 positions possibles\n
-		*/
-		else
+	}
+	/** - si le joueur est loup : rapeller l'IA récursivement sur les 10 positions possibles\n
+	*/
+	else
+	{
+		for(k=1;k<6;k++)
 		{
-			for(k=1;k<6;k++)
+			if(possible_and_free(pawn[k].position.x+1,pawn[k].position.y-1,pawn))
 			{
-				if(possible_and_free(pawn[k].position.x+1,pawn[k].position.y-1,pawn))
+				switch(k)
 				{
-					switch(k)
-					{
-						case 1: count += IA(LAMB,depth - 1,lx,ly,w1x+1,w1y-1,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
-								break;
-						case 2: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x+1,w2y-1,w3x,w3y,w4x,w4y,w5x,w5y);
-								break;
-						case 3: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x+1,w3y-1,w4x,w4y,w5x,w5y);
-								break;
-						case 4: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x+1,w4y-1,w5x,w5y);
-								break;
-						case 5: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x+1,w5y-1);
-								break;
-					}
+					case 1: count += IA(LAMB,depth - 1,lx,ly,w1x+1,w1y-1,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
+							break;
+					case 2: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x+1,w2y-1,w3x,w3y,w4x,w4y,w5x,w5y);
+							break;
+					case 3: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x+1,w3y-1,w4x,w4y,w5x,w5y);
+							break;
+					case 4: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x+1,w4y-1,w5x,w5y);
+							break;
+					case 5: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x+1,w5y-1);
+							break;
 				}
-				if(possible_and_free(pawn[k].position.x-1,pawn[k].position.y-1,pawn))
+			}
+			if(possible_and_free(pawn[k].position.x-1,pawn[k].position.y-1,pawn))
+			{
+				switch(k)
 				{
-					switch(k)
-					{
-						case 1: count += IA(LAMB,depth - 1,lx,ly,w1x-1,w1y-1,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
-								break;
-						case 2: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x-1,w2y-1,w3x,w3y,w4x,w4y,w5x,w5y);
-								break;
-						case 3: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x-1,w3y-1,w4x,w4y,w5x,w5y);
-								break;
-						case 4: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x-1,w4y-1,w5x,w5y);
-								break;
-						case 5: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x-1,w5y-1);
-								break;
-					}
+					case 1: count += IA(LAMB,depth - 1,lx,ly,w1x-1,w1y-1,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y);
+							break;
+					case 2: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x-1,w2y-1,w3x,w3y,w4x,w4y,w5x,w5y);
+							break;
+					case 3: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x-1,w3y-1,w4x,w4y,w5x,w5y);
+							break;
+					case 4: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x-1,w4y-1,w5x,w5y);
+							break;
+					case 5: count += IA(LAMB,depth - 1,lx,ly,w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x-1,w5y-1);
+							break;
 				}
 			}
 		}
-	}//fin du switch
+	}
 	return count;
 }

@@ -1,8 +1,26 @@
 #include "main.h"
 
-void go_save(GtkWidget *emitter, t_game *game)
+void go_load(GtkWidget *emitter, gpointer null)
 {
-	save_game(game,"save.ece");
+	char path[128];
+	sprintf(path,"%ssave.ece",PATH);
+	/*if(GAME != NULL)
+	{
+		while((*GAME)->data.history != NULL) game_history_back(*GAME,1);
+		free((*GAME)->data.now);
+		free((*GAME)->data.selection);
+		free((*GAME)->data.player[1]);
+		free((*GAME)->data.player[2]);
+		free((*GAME)->data.player);
+		free((*GAME)->wintheme);
+		free(*GAME);
+	}*/
+	load_game(GAME,gtk_widget_get_parent((*GAME)->eventbox[0][0].eventbox),path);
+}
+
+void go_save(GtkWidget *emitter, gpointer null)
+{
+	save_game(*GAME,"save.ece");
 }
 
 void load_game(t_game **gameadress,GtkWidget *table,char *path)
