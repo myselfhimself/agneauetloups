@@ -7,6 +7,98 @@
 
 //threads : http://yolinux.com/TUTORIALS/LinuxTutorialPosixThreads.html#BASICS
 
+t_network* _net=NULL;
+t_game* _game=NULL;
+int _pid=0;
+
+///fonction callback appelée a chaque fois qu'un paquet est reçu.
+///elle s'occupe de passer les différents données des packets aux fonctions spécialisées qui réagiront
+int packet_manager(t_packet* data)
+{
+	//enum{NEW_POS,CHAT,NAME,PLEASE_CHOOSE,WHAT_YOU_ARE,YOU_DONT_PLAY,GAME_OVER,PLAY_AGAIN};
+	int success;
+	//t_history temp;
+	char* temp;
+
+	success = data != NULL;
+	if(!success)
+		printf("packet_manager : data == NULL : rien de fait\n");
+	else
+		switch(data->type)
+		{
+			case NAME:
+				packet_on_name( ((t_packet_text*)data)->text ); //on passe bien un char*
+				break;
+			case CHAT:
+				packet_on_chat( ((t_packet_text*)data)->text ); //on passe bien un char*
+				break;
+			case PLEASE_CHOOSE:
+				packet_on_please_choose();
+				break;
+			case WHAT_YOU_ARE:
+				packet_on_what_you_are( ((t_packet*)data)->info );
+				break;
+			case YOU_DONT_PLAY:
+				packet_on_you_dont_play();
+				break;
+			case GAME_OVER:
+				packet_on_game_over();
+				break;
+			case PLAY_AGAIN:
+				packet_on_play_again();
+				break;
+			default:
+				success = 0;
+				printf("packet_manager : packet inconnu : %d\n",data->type);
+		}
+	//si le retour est FAUX, network_receive va provoquer un network_exit()
+	return success;
+}
+
+void dialog_info(char* format_text,char* contents)
+{
+	//premier paramètre : le parent (important pour bloquer le parent...)
+	GtkMessageDialog* dia = gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,
+
+///met un nom pour le joueur adverse
+//other's name alloué
+void packet_on_name(char* others_name)
+{
+	//si le nom n'était pas fixé
+	if(_net->others_name != NULL)
+	{
+		_net->others_name = others_name;
+		//la connection en fait de s'établire
+		set_status_text("Connection etablie avec %s.",_net->others_name);
+		printf("packet_on_name : nom du joueur adverse %s\n",others_name);
+	}
+	else
+		printf("packet_on_name : nom deja fixe : %s pas d'overriding\n",others_name);
+}
+
+
+
+void network_on_please_choose()
+{
+
+	
+
+network_on_what_you_are(int animal)
+
+network_on_new_pos(alloué t_movement* now)
+
+network_on_game_over(int you_win)
+
+network_on_play_again()
+
+network_on_remote_disconnect()
+
+///alias pour network_send(packet_make
+void packet_send(int type,void* content)
+{
+	network_send(packet_make(type,content));
+}
+
 ///affiche le contenu d'un paquet
 void packet_display(t_packet* packet)
 {
@@ -58,24 +150,6 @@ t_packet* packet_make(int type, void* content)
 	return packet;
 }
 
-//fct callback : ne doit pas figurer ici
-int callback_fct(t_packet* data)
-{
-	int success;
-	//t_history temp;
-	char* temp;
-
-	success = data != NULL;
-	if(!success)
-		printf("callback_fct : data == NULL : rien de fait\n");
-	else
-		packet_display(data);
-	return 1;
-}
-
-t_network* _net=NULL;
-t_game* _game=NULL;
-int _pid=0;
 
 ///active le mode réseau, initialise des variables réseau
 void network_init(t_game* game)
@@ -87,6 +161,7 @@ void network_init(t_game* game)
 	_game->use_network = TRUE;
 	_net->server.state = NETWORK_CLOSED;
 	_net->client.state = NETWORK_CLOSED;
+	_net->my_name = _net->others_name = NULL;
 	_net->im_server = FALSE;
 }
 
@@ -275,7 +350,9 @@ int network_client_run(char* ip,char* port)
 					_net->client.address = client_addr;
 					_net->client.socket = client_sockfd;
 					printf("connection etablie : %s:%s\n",ip,port);
-					network_main(callback_fct);
+					//appel du gestionnaire de réseau client en lui passant un pointeur
+					//vers la fct callback qui sera appelée à chaque réception de paquets
+					network_main(packet_manager);
 				}
 			}
 		}
@@ -356,7 +433,7 @@ void* network_receive(void* on_recv)
 				pleaseStop  =1;
 				break;
 			case 0:
-				printf("le client distant a ferme la connection\n");
+				dialog_info("le client distant a ferme la connection\n");
 				//fin de la boucle de réception :
 				pleaseStop = 1;
 				break;
@@ -364,6 +441,8 @@ void* network_receive(void* on_recv)
 				//printf("paquet recu : recv_return=%d, content : %c, is null : %d\n",recv_return,*(char*)data,data==NULL);
 				//appel du callback et réception du retour de l'appel
 				pleaseStop = !((int (*) (t_packet*)) on_recv) (data);
+				if(pleaseStop)
+				dialog_info("packet inconnu, fermeture de la connection\n");
 		}
 		//si on a reçu l'information comme quoi il faut s'arrêter par l'appel de la fonction callback
 		if(pleaseStop)
@@ -409,6 +488,7 @@ int network_exit()
 	network_server_shutdown();
 	network_client_shutdown();
 	_net->im_server = FALSE;
+	game_lock(_game,TRUE);
 	printf("fin du reseau\n");
 }
 
@@ -603,7 +683,9 @@ void* network_server_accept(void * none)
 		
 			//dit l'adresse de l'ordinateur avec lequel on vient d'établir une connection
 			printf("connection etablie avec : %s\n",inet_ntoa(remote_addr->sin_addr));
-			network_main(callback_fct);
+			//appel du gestionnaire de réseau client en lui passant un pointeur
+			//vers la fct callback qui sera appelée à chaque réception de paquets
+			network_main(packet_manager);
 		}
 	}
 	//pas de retour
