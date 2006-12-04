@@ -1,11 +1,13 @@
 #include "main.h"
 
-void go_save(GtkWidget *emitter, t_game *game)
+void go_save(GtkWidget *emitter, gpointer null)
 {
-	save_game(game,"save.ece");
+	/** redirige le callback vers la fonction de sauvegarde\n
+	*/
+	save_game("save.ece");
 }
 
-void load_game(t_game **gameadress,GtkWidget *table,char *path)
+void load_game(t_game **gameadress,GtkWidget *table)
 {
     FILE *fp;
     int i;
@@ -15,8 +17,12 @@ void load_game(t_game **gameadress,GtkWidget *table,char *path)
 	gboolean orientation;
 	t_coords selection;
 	t_history *newhistory;
+	char *path;
 	char path2[128];
 	int historynb;
+	sprintf(path,"%ssave.ece",PATH);
+	/** ouvre le fichier de sauvegarde\n
+	*/
 	if(fp=fopen(path,"rb"))
     {                	
         fread(joueur,sizeof(t_player),2,fp);
@@ -77,10 +83,11 @@ void load_game(t_game **gameadress,GtkWidget *table,char *path)
 	}
 }
 
-int save_game(t_game *game, char *path)
+int save_game(char *path)
 {
 	int count,whennull = -1,i;
 	FILE *fp;
+	t_game *game = GAME;
 	//GList *save = game->data.history;
 	if(fp=fopen(path,"wb"))
 	{
