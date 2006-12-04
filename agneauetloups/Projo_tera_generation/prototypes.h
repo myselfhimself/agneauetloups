@@ -239,6 +239,18 @@ void onquit(gpointer data, guint callback_action,GtkWidget *widget);
 */
 void onabout(gpointer data, guint callback_action,GtkWidget *widget);
 
+//change le texte dans la barre de status
+/** \fn void set_status_text(char* format_str,char* str)
+*
+* Objectif(s): changer le texte de la barre de status
+*
+* \param [in] chaîne de formattage
+* \param [in] chaîne éventuellement utilisée dans la chaîne de formattage
+*
+* \return aucun
+*/
+void set_status_text(char* format_str,char* str);
+
 // #################################################
 // #                                                          dans init.c                                                                  #
 // #################################################

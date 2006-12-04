@@ -1,5 +1,17 @@
 #include "main.h"
 
+//change le texte dans la barre de status
+//question d'avoir un pointeur sur la barre de status
+void set_status_text(char* format_str,char* str)
+{
+	char temp[100];
+	if(str != NULL)
+		sprintf(temp,format_str,str);
+	else
+		sprintf(temp,format_str);
+// 	//manque plus qu'à insérer ce texte quelque part
+}
+
 void onquit(gpointer data, guint callback_action,GtkWidget *widget)
 {
     GtkWidget *Question;
