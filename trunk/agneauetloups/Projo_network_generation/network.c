@@ -7,6 +7,12 @@
 
 //threads : http://yolinux.com/TUTORIALS/LinuxTutorialPosixThreads.html#BASICS
 
+//créé et envoie un paquet
+void packet_send(int type, void* content)
+{
+     network_send(packet_make(type,content));
+}
+
 ///affiche le contenu d'un paquet
 void packet_display(t_packet* packet)
 {
