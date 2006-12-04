@@ -8,7 +8,7 @@
 // #################################################
 /** \fn void preIA(t_game *game,int depth)
 *
-* Objectif(s): commander le noyau de l'IA, gérer les choix et la difficulté
+* Objectif(s): commander le noyau de l'IA, gï¿½er les choix et la difficultï¿½
 *
 * \param [in,out] game structure principale
 * \param [in] depth profondeur de la recherche
@@ -19,22 +19,22 @@ void preIA(t_game *game,int depth);
 
 /** \fn int IA(int player,int depth,int lx,int ly,int w1x,int w1y,int w2x,int w2y,int w3x,int w3y,int w4x,int w4y,int w5x,int w5y)
 *
-* Objectif(s): évaluer la chance de gagner a partir d'un point
+* Objectif(s): ï¿½aluer la chance de gagner a partir d'un point
 *
 * \param [in] player joueur en cours
 * \param [in] depth profondeur de la recherche
 * \param [in] lx abscisse de l'agneau
-* \param [in] ly ordonnée de l'agneau 
+* \param [in] ly ordonnï¿½ de l'agneau 
 * \param [in] w1x abscisse du loup 1
-* \param [in] w1y ordonnée du loup 1
+* \param [in] w1y ordonnï¿½ du loup 1
 * \param [in] w2x abscisse du loup 2
-* \param [in] w2y ordonnée du loup 2
+* \param [in] w2y ordonnï¿½ du loup 2
 * \param [in] w3x abscisse du loup 3
-* \param [in] w3y ordonnée du loup 3
+* \param [in] w3y ordonnï¿½ du loup 3
 * \param [in] w4x abscisse du loup 4
-* \param [in] w4y ordonnée du loup 4
+* \param [in] w4y ordonnï¿½ du loup 4
 * \param [in] w5x abscisse du loup 5
-* \param [in] w5y ordonnée du loup 5
+* \param [in] w5y ordonnï¿½ du loup 5
 *
 * \return coefficient sur la chance de gagner
 */
@@ -45,13 +45,13 @@ int IA(int player,int depth,int lx,int ly,int w1x,int w1y,int w2x,int w2y,int w3
 // #################################################
 /** \fn int next_wolf_to_move_in_line(t_association pawn[6])
 *
-* Objectif(s): donner le prochain loup à bouger (cas d'une formation ligne)
+* Objectif(s): donner le prochain loup ï¿½bouger (cas d'une formation ligne)
 *
 * \param [in] t_association pawn[6] positions des pions
 *
 * \pre il faut que les loups soient en formation ligne
 *
-* \return numéro du loup à déplacer
+* \return numï¿½o du loup ï¿½dï¿½lacer
 */
 int next_wolf_to_move_in_line(t_association pawn[6]);
 /** \fn int wolves_in_line(t_association pawn[6])
@@ -65,10 +65,10 @@ int next_wolf_to_move_in_line(t_association pawn[6]);
 int wolves_in_line(t_association pawn[6]);
 /** \fn int isnt_too_far(int x, int y, t_association pawn[6])
 *
-* Objectif(s): décider si un déplacement agneau est jugé utile pour le calcul des probabilités
+* Objectif(s): dï¿½ider si un dï¿½lacement agneau est jugï¿½utile pour le calcul des probabilitï¿½
 *
 * \param [in] int x abcisse voulue
-* \param [in] int y ordonnée voulue
+* \param [in] int y ordonnï¿½ voulue
 * \param [in] t_association pawn[6] positions des pions
 *
 * \return si trop loin ou non
@@ -78,10 +78,10 @@ int isnt_too_far(int x, int y, t_association pawn[6]);
 *
 * Objectif(s): calculer le maximum dans un lot de 4 nombres
 *
-* \param [in] int a premier nombre à comparer
-* \param [in] int b deuxième nombre à comparer
-* \param [in] int c troisième nombre à comparer
-* \param [in] int d quatrième nombre à comparer
+* \param [in] int a premier nombre ï¿½comparer
+* \param [in] int b deuxiï¿½e nombre ï¿½comparer
+* \param [in] int c troisiï¿½e nombre ï¿½comparer
+* \param [in] int d quatriï¿½e nombre ï¿½comparer
 *
 * \return le maximum des 4 nombres
 */
@@ -98,43 +98,43 @@ int importance(int depth);
 
 /** \fn int possible_and_free(int x, int y, t_association pawn[6]);
 *
-* Objectif(s): évaluer si un déplacement est possible
+* Objectif(s): ï¿½aluer si un dï¿½lacement est possible
 *
-* \param [in] x abcisse de l'arrivée
-* \param [in] y ordonnée de l'arrivée
+* \param [in] x abcisse de l'arrivï¿½
+* \param [in] y ordonnï¿½ de l'arrivï¿½
 * \param [in] pawn[6] positions des pions (animaux)
 *
-* \return un booléen, 1 si possible sinon 0
+* \return un boolï¿½n, 1 si possible sinon 0
 */
 int possible_and_free(int x, int y, t_association pawn[6]);
 
 /** \fn int wolves_won(t_association pawn[6])
 *
-* Objectif(s): tester si les loups ont gagnés
+* Objectif(s): tester si les loups ont gagnï¿½
 *
 * \param [in] pawn[6] positions des pions (animaux)
 *
-* \return un booléen, 1 si loups vainqueurs sinon 0
+* \return un boolï¿½n, 1 si loups vainqueurs sinon 0
 */
 int wolves_won(t_association pawn[6]);
 
 /** \fn int lamb_won(t_association pawn[6])
 *
-* Objectif(s): tester si l'agneau a gagné
+* Objectif(s): tester si l'agneau a gagnï¿½
 *
 * \param [in] pawn[6] positions des pions (animaux)
 *
-* \return un booléen, 1 si l'agneau vainqueur sinon 0
+* \return un boolï¿½n, 1 si l'agneau vainqueur sinon 0
 */
 int lamb_won(t_association pawn[6]);
 
 /** \fn int game_is_over(t_association pawn[6])
 *
-* Objectif(s): tester si le jeu est terminé (1 gagnant)
+* Objectif(s): tester si le jeu est terminï¿½(1 gagnant)
 *
 * \param [in] pawn[6] positions des pions (animaux)
 *
-* \return un booléen, 1 si le jeu est fini sinon 0
+* \return un boolï¿½n, 1 si le jeu est fini sinon 0
 */
 int game_is_over(t_association pawn[6]);
 
@@ -155,20 +155,20 @@ void gtk_image_superimpose(GtkWidget *eventbox,const gchar *img);
 // dans tests.c
 t_association *changeposition(t_association pawn[6], int pawntomove,int direction);
 void afficher_console(t_game *game);
-void select(GtkWidget *eventbox,gint R,gint V,gint B);
+void _select(GtkWidget *eventbox,gint R,gint V,gint B);
 
 // #################################################
 // #                 dans game.c                   #
 // #################################################
 /** \fn void make_movement(t_game *game,int x1,int y1,int x2,int y2)
 *
-* Objectif(s): déplacer un pion
+* Objectif(s): dï¿½lacer un pion
 *
 * \param [in,out] t_game *game structure principale
-* \param [in] int x1 abcisse de départ
-* \param [in] int y1 ordonnée de départ
-* \param [in] int x2 abcisse d'arrivée
-* \param [in] int y2 ordonnée d'arrivée
+* \param [in] int x1 abcisse de dï¿½art
+* \param [in] int y1 ordonnï¿½ de dï¿½art
+* \param [in] int x2 abcisse d'arrivï¿½
+* \param [in] int y2 ordonnï¿½ d'arrivï¿½
 *
 * \return aucun
 */
@@ -178,10 +178,10 @@ void onrelease(GtkWidget *emitter,GdkEventButton *event,t_game *game);
 
 /** \fn void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
 *
-* Objectif(s): gérer les déplacements (callback des eventbox)
+* Objectif(s): gï¿½er les dï¿½lacements (callback des eventbox)
 *
-* \param [in] GtkWidget *emitter eventbox émettant le signal button_press_event
-* \param [in] GdkEventButton *event type d'évènement gdk
+* \param [in] GtkWidget *emitter eventbox ï¿½ettant le signal button_press_event
+* \param [in] GdkEventButton *event type d'ï¿½ï¿½ement gdk
 * \param [in,out] t_game *game structure principale
 *
 * \return aucun
@@ -193,11 +193,11 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game);
 // #################################################
 /** \fn int game_history_add(t_game *game)
 *
-* Objectif(s): créer un historique du jeu
+* Objectif(s): crï¿½r un historique du jeu
 *
 * \param [in,out] t_game *game structure principale
 *
-* \return réussite de la fonction
+* \return rï¿½ssite de la fonction
 */
 int game_history_add(t_game *game);
 
@@ -206,7 +206,7 @@ int game_history_add(t_game *game);
 * Objectif(s): restaurer un historique du jeu
 *
 * \param [in,out] t_game *game structure principale
-* \param [in,out] int back profondeur du retour arrière
+* \param [in,out] int back profondeur du retour arriï¿½e
 *
 * \return aucun
 */
@@ -217,11 +217,11 @@ void game_history_back(t_game *game, int back);
 // #################################################
 /** \fn void onquit(gpointer data, guint callback_action,GtkWidget *widget)
 *
-* Objectif(s): gérer le bouton quitter du menu
+* Objectif(s): gï¿½er le bouton quitter du menu
 *
-* \param [in] gpointer data non utilisé
-* \param [in] guint callback_action non utilisé
-* \param [in] GtkWidget *widget non utilisé
+* \param [in] gpointer data non utilisï¿½
+* \param [in] guint callback_action non utilisï¿½
+* \param [in] GtkWidget *widget non utilisï¿½
 *
 * \return aucun
 */
@@ -229,11 +229,11 @@ void onquit(gpointer data, guint callback_action,GtkWidget *widget);
 
 /** \fn void onabout(gpointer data, guint callback_action,GtkWidget *widget)
 *
-* Objectif(s): gérer le bouton about du menu
+* Objectif(s): gï¿½er le bouton about du menu
 *
-* \param [in] gpointer data non utilisé
-* \param [in] guint callback_action non utilisé
-* \param [in] GtkWidget *widget non utilisé
+* \param [in] gpointer data non utilisï¿½
+* \param [in] guint callback_action non utilisï¿½
+* \param [in] GtkWidget *widget non utilisï¿½
 *
 * \return aucun
 */
@@ -244,8 +244,8 @@ void onabout(gpointer data, guint callback_action,GtkWidget *widget);
 *
 * Objectif(s): changer le texte de la barre de status
 *
-* \param [in] chaîne de formattage
-* \param [in] chaîne éventuellement utilisée dans la chaîne de formattage
+* \param [in] chaï¿½e de formattage
+* \param [in] chaï¿½e ï¿½entuellement utilisï¿½ dans la chaï¿½e de formattage
 *
 * \return aucun
 */
@@ -256,16 +256,16 @@ void set_status_text(char* format_str,char* str);
 // #################################################
 /** \fn GtkWidget *window_init(GtkWidget **win)
 *
-* Objectif(s): créer l'interface graphique
+* Objectif(s): crï¿½r l'interface graphique
 *
-* \param [in] GtkWidget **win adresse du pointeur sur la fenêtre
+* \param [in] GtkWidget **win adresse du pointeur sur la fenï¿½re
 *
 * \return adresse de la table de jeu
 */
 GtkWidget *window_init(GtkWidget **win,t_game **game);
 /** \fn int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1type,gboolean player1animal,char *player2name,gboolean player2type,gboolean player2animal)
 *
-* Objectif(s): créer et initialiser le jeu(structures et terrain)
+* Objectif(s): crï¿½r et initialiser le jeu(structures et terrain)
 *
 * \param [in,out] t_game **game adresse du pointeur de la structure principale
 * \param [in] GtkWidget *table pointeur sur la table de jeu
@@ -276,7 +276,7 @@ GtkWidget *window_init(GtkWidget **win,t_game **game);
 * \param [in] gboolean player2type type du second joueur (IA/humain)
 * \param [in] gboolean player2animal animal du second joueur (loup/agneau)
 *
-* \return succès de l'opération
+* \return succï¿½ de l'opï¿½ation
 */
 int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1type,gboolean player1animal,char *player2name,gboolean player2type,gboolean player2animal);
 
@@ -285,9 +285,9 @@ int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1t
 // #################################################
 /** \fn int init_OS_path()
 *
-* Objectif(s): gérer le multiplateforme
+* Objectif(s): gï¿½er le multiplateforme
 *
-* \return succès de l'opération
+* \return succï¿½ de l'opï¿½ation
 */
 int init_OS_path();
 
@@ -305,5 +305,24 @@ void game_lock(t_game* game, gboolean do_lock);
 gboolean game_locked(t_game* game);
 gboolean next_turn(gpointer _game);
 void go_load(GtkWidget *emitter, gpointer null);
+void hide_nouvelle_partie(GtkWidget* emitter, gpointer none);
+int is_empty_string(gchar* str);
+void game_initter(GtkWidget* emitter, GtkWidget* dialog);
+void
+on_agneau_radio_ordi_toggled           (gpointer         user_data,
+                                        GtkToggleButton *togglebutton)
+
+
+
+void
+on_loups_radio_ordi_toggled            (gpointer         user_data,
+                                        GtkToggleButton *togglebutton);
+
+
+void on_loups_radio_joueur_toggled (gpointer user_data,GtkToggleButton *togglebutton);
+
+
+
+void on_agneau_radio_joueur_toggled (gpointer user_data,GtkToggleButton *togglebutton);
 
 #endif

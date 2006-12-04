@@ -6,15 +6,21 @@
 #include <string.h>
 #include <time.h>
 #include <gtk/gtk.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#include <gdk/gdkkeysyms.h>
 
 #include "constants.h"
 #include "structures.h"
 #include "prototypes.h"
 
 /** \file main.h
-*  \brief Bibliothèque principale
+*  \brief Bibliothï¿½ue principale
 *
-* Bibliothèque principale
+* Bibliothï¿½ue principale
 */
 
 /** \file main.c
@@ -44,13 +50,13 @@
 /** \file OS.c
 *  \brief Contient la gestion multiplateforme
 *
-* S'occupe de gérer les différence entre plateformes
+* S'occupe de gï¿½er les diffï¿½ence entre plateformes
 */
 
 /** \file init.c
 *  \brief Contient les initialisations
 *
-* S'occupe de créer et remplir les données de jeu
+* S'occupe de crï¿½r et remplir les donnï¿½s de jeu
 */
 
 /** \file GDK.c
@@ -62,13 +68,13 @@
 /** \file game.c
 *  \brief Contient la gestion du jeu
 *
-* S'occupe de gérer les clicks, les changements de tours, les appels d'IA...
+* S'occupe de gï¿½er les clicks, les changements de tours, les appels d'IA...
 */
 
 /** \file IA.c
 *  \brief Contient l'IA
 *
-* S'occupe de définir les déplacements de l'IA
+* S'occupe de dï¿½inir les dï¿½lacements de l'IA
 */
 
 /** \file IA_utilities.c
@@ -80,19 +86,19 @@
 /** \file history.c
 *  \brief Contient les outils de gestion d'historique
 *
-* Contient les fonctions pour créer et remettre en place l'historique
+* Contient les fonctions pour crï¿½r et remettre en place l'historique
 */
 
 /** \file menu.c
-*  \brief Contient les fonctions associées aux boutons du menu
+*  \brief Contient les fonctions associï¿½s aux boutons du menu
 *
-* Contient les fonctions associées aux boutons du menu (onabout, onquit ...)
+* Contient les fonctions associï¿½s aux boutons du menu (onabout, onquit ...)
 */
 
 /** \file tests.c
 *  \brief Contient les fonctions de tests
 *
-* Contient les fonctions non présentes/utiles en version finale
+* Contient les fonctions non prï¿½entes/utiles en version finale
 */
 
 #endif
