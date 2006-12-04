@@ -98,6 +98,13 @@ typedef struct
 	GtkWidget *wintheme;
 }t_game;
 
-typedef struct {int nbwords;char **word;}t_wordlist;
+/** \struct t_wordlist
+* \brief structure de stockage de mots
+*  */
+typedef struct
+{
+	int nbwords;/**< nombre de mots présents*/
+	char **word;/**< tableau des mots présents*/
+}t_wordlist;
 
 #endif
