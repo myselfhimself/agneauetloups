@@ -343,7 +343,18 @@ int game_init(t_game **game,GtkWidget *table,char *player1name,gboolean player1t
 */
 int init_OS_path();
 
-int save_game(t_game *game, char *path);
+// #################################################
+// #                   dans load_save.c             #
+// #################################################
+/** \fn save_game(t_game *game, char *path)
+*
+* Objectif(s): sauvegarder le jeu dans le fichier save.ece
+*
+* \param [in] char *path chemin d'accès au fichier save.ece
+*
+* \return succès de l'opération
+*/
+int save_game(t_game *game);
 
 // #################################################
 // #                   dans network.c             #
@@ -412,12 +423,53 @@ int network_server_shutdown();
 ///une fois network_server_init lancé, écoute les connections sur le socket ouvert et en établit une seule
 void* network_server_accept(void * none);
 
+/** \fn t_wordlist *get_themes_files(char *extension)
+*
+* Objectif(s): récupérer tout les fichiers de themes présent dans le dossier themes
+*
+* \param [in] char *extension extension des fichiers themes (toujours .theme dans notre cas)
+*
+* \return structure comprenant le nombre de mots et un tableau de mots
+*/
 t_wordlist *get_themes_files(char *extension);
+
+/** \fn GtkWidget* create_wintheme()
+*
+* Objectif(s): créer la fenetre de gestion des themes
+*
+* \return renvoi le GtkWidget de la fenetre de gestion des themes
+*/
 GtkWidget* create_wintheme();
-GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name);
+
+/** \fn void wintheme();
+*
+* Objectif(s): afficher la fenetre de gestion des themes
+*
+* \return aucun
+*/
 void wintheme();
+
+/** \fn void go_back(GtkWidget *emitter, gpointer null);
+*
+* Objectif(s): lancer la fonction pour revenir en arriere
+*
+* \param [in] GtkWidget *emitter widget emetteur (non utilisé)
+* \param [in] gpointer null data du callback (non utilisé)
+*
+* \return aucun
+*/
 void go_back(GtkWidget *emitter, gpointer null);
-void go_save(GtkWidget *emitter, t_game *game);
+
+/** \fn void go_save(GtkWidget *emitter, t_game *game)
+*
+* Objectif(s): lancer la fonction pour revenir en arriere
+*
+* \param [in] GtkWidget *emitter widget emetteur (non utilisé)
+* \param [in] gpointer null data du callback (non utilisé)
+*
+* \return aucun
+*/
+void go_save(GtkWidget *emitter, gpointer null);
 
 
 #endif
