@@ -4,17 +4,23 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include <time.h>
 #include <gtk/gtk.h>
-//sockets BSD
+#include <pthread.h> //threads : pthread_create, pthread_exit. Utiliser -lpthreadVC2 dans la compilation
+#include <signal.h> //pour kill(pid,signal) http://forums.devshed.com/c-programming-42/c-kill-402555.html
+
+#ifdef _WIN32
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+#else
+//sockets BSD, on est sous linux
 #include <sys/socket.h> //bind() socket() accept() struct sockaddr
 #include <netinet/in.h> //pour struct sockaddr_in
 #include <netdb.h> //pour hostent, struct hostent* gethostbyname(char*)
 #include <arpa/inet.h> //char *inet_ntoa(struct in_addr in); (done l'ip string d'une adresse bits)
-#include <stdlib.h> //calloc
 #include <unistd.h> //close(fd) pour fermer un socket, sleep(nbseconds)
-#include <pthread.h> //threads : pthread_create, pthread_exit. Utiliser -lpthread dans la compilation
-#include <signal.h> //pour kill(pid,signal) http://forums.devshed.com/c-programming-42/c-kill-402555.html
+#endif
 
 #include "constants.h"
 #include "structures.h"
