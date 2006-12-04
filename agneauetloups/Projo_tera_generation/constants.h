@@ -55,6 +55,8 @@ char PATH[128];
 #include "structures.h"
   
 GtkWidget *GTK_WINTHEME;
-t_game **GAME;
+t_game **GAME = NULL;
+
+#define NEXTTURNTIME 200
 
 #endif

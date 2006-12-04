@@ -297,12 +297,13 @@ GtkWidget* create_wintheme();
 GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name);
 void wintheme();
 void go_back(GtkWidget *emitter, gpointer null);
-void go_save(GtkWidget *emitter, t_game *game);
+void go_save(GtkWidget *emitter, gpointer null);
 int current_player_id(t_game* game);
 char* current_player_name(t_game * game);
-t_player* current_player(t_game* game)
-void game_lock(t_game* game, gboolean do_lock)
-gboolean game_locked(t_game* game)
-gboolean next_turn(gpointer _game)
+t_player* current_player(t_game* game);
+void game_lock(t_game* game, gboolean do_lock);
+gboolean game_locked(t_game* game);
+gboolean next_turn(gpointer _game);
+void go_load(GtkWidget *emitter, gpointer null);
 
 #endif

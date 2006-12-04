@@ -1,5 +1,33 @@
 #include "main.h"
 
+void show_winner(t_game *game)
+{
+     GtkWidget *dialog;
+     char winner[128];
+     char winnertype[128];
+     if(lamb_won(game->pawn))
+     {
+         strcpy(winnertype,"l'agneau");
+         if(game->players[0].animal == LAMB)strcpy(winner,game->data.player[0]);
+         else strcpy(winner,game->data.player[1]);
+     }
+     else
+     {
+         strcpy(winnertype,"les loups");
+         if(game->players[1].animal == WOLF)strcpy(winner,game->data.player[1]);
+         else strcpy(winner,game->data.player[0]);
+     }
+     dialog = gtk_message_dialog_new (GTK_WINDOW(gtk_widget_get_parent(gtk_widget_get_parent(gtk_widget_get_parent(game->eventbox[0][0].eventbox)))),
+                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  GTK_MESSAGE_INFO,
+                                  GTK_BUTTONS_CLOSE,
+                                  "Gagnant : %s , avec %s",
+                                  winner,winnertype);
+                                  
+     gtk_dialog_run(GTK_DIALOG(dialog));
+     gtk_widget_destroy(dialog);
+}
+
 //retourne l'index dans le tableau game->players du joueur en cours
 int current_player_id(t_game* game)
 {
@@ -49,24 +77,26 @@ gboolean next_turn(gpointer _game)
 {
 	t_game* game = (t_game*)_game;
 
+	//on n'échange pas l'animal du joueur devant jouer, c'est fait dans on_click
+	//si le joueur en cours (on sait son animal) est humain (pas l'IA)
+	if(game_is_over(game->pawn))
 	{
-		//on n'échange pas l'animal du joueur devant jouer, c'est fait dans on_click
-		//si le joueur en cours (on sait son animal) est humain (pas l'IA)
-		if(current_player(game)->type == HUMAN)
-		{	
-			//on affiche que c'est son tour
-			set_status_text("C'est au tour de %s de jouer.",current_player_name(game));
-			//on le laisse jouer
-		}
-		//si c'est l'intelligence artificielle
-		else
-		{
-			//on la fait jouer directement
-			preIA(game,8);
-			//on fait appeler une seconde plus tard next_turn pour faire jouer le joueur suivant 
-			//ça laisse un délai si l'IA joue contre elle-même tour à tour
-			g_timeout_add(1000,next_turn,game);
-		}
+        show_winner(game);
+    }
+	else if(current_player(game)->type == HUMAN)
+	{	
+		//on affiche que c'est son tour
+		set_status_text("C'est au tour de %s de jouer.",current_player_name(game));
+		//on le laisse jouer
+	}
+	//si c'est l'intelligence artificielle
+	else
+	{
+		//on la fait jouer directement
+		preIA(game,8);
+		//on fait appeler une seconde plus tard next_turn pour faire jouer le joueur suivant 
+		//ça laisse un délai si l'IA joue contre elle-même tour à tour
+		g_timeout_add(NEXTTURNTIME,next_turn,game);
 	}
 	//comme ça, g_timeout_add n'executera pas cette fonction plus d'une fois seulement
 	return FALSE;
@@ -153,23 +183,7 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
     i-=11; j-=11;
 	/** - si la sélection n'est pas faite\n
 	*/
-	if(game_is_over(game->pawn))
-	{
-        /*if(wolves_won(game->pawn))
-        {
-            for(i=0;i<10;i+=2)
-            {
-                for(j=0;j<10;j++)
-                {
-                    gtk_container_remove(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox),(GtkWidget*)gtk_container_get_children(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox))->data);
-                    sprintf(path,"%s%s",PATH,"blood.BMP");
-	                gtk_container_add(GTK_CONTAINER(game->eventbox[i+1-j%2][j].eventbox),gtk_image_new_from_file(path));
-	                gtk_widget_show_all(game->eventbox[i+1-j%2][j].eventbox);
-                }
-			}
-        }*/
-    }
-    else if(game->data.selection == NULL)
+	if(game->data.selection == NULL)
     {
         /** -# regarder si la position correspond au bon joueur au bon endroit\n
 		*     -# si oui enregistrer la position\n
@@ -226,7 +240,7 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
 	            gtk_image_superimpose(game->eventbox[game->data.now->lamb.x][game->data.now->lamb.y].eventbox,path);
                 game->data.now->curplayer = WOLF;
                 afficher_console(game);
-		g_timeout_add(1000,next_turn,game);
+		g_timeout_add(NEXTTURNTIME,next_turn,game);
             }
         }
         else
@@ -268,7 +282,7 @@ void onclick(GtkWidget *emitter,GdkEventButton *event,t_game *game)
 	            gtk_image_superimpose(game->eventbox[game->data.now->wolf[pos-1].x][game->data.now->wolf[pos-1].y].eventbox,path);
 				game->data.now->curplayer = LAMB;
                 afficher_console(game);
-		g_timeout_add(1000,next_turn,game);
+		        g_timeout_add(NEXTTURNTIME,next_turn,game);
             }
 		}
     }
