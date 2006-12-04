@@ -54,7 +54,11 @@ char PATH[128];
 #endif
 
 #include "structures.h"
+/** Raccourci vers la fenetre de gestion des themes (obsolete depuis l'intégration du t_game GAME)\n
+*/
 GtkWidget *GTK_WINTHEME;
+/** obligation de mettre en global la structure principale pour le menu : le structure est créée après la création du menu , il faudrai l'inclure dans les callbacks du menu alors qu'elle n'est pas encorfe créée\n
+*/
 t_game **GAME;
 
 //defines des state de t_connection
