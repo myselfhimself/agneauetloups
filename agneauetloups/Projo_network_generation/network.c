@@ -75,7 +75,7 @@ int callback_fct(t_packet* data)
 
 t_network* _net=NULL;
 t_game* _game=NULL;
-int _pid=0;
+pthread_t _pid = {NULL,0};
 
 ///active le mode réseau, initialise des variables réseau
 void network_init(t_game* game)
@@ -94,17 +94,24 @@ void network_init(t_game* game)
 ///utile dans les cas où un socket n'avait pas été fermé mais est bloqué quand même
 ///retourne 1 si succès ou 0 sinon
 int network_reuse_socket(int sockfd)
+
 {
 	int success;
 	int yes;	
 
+    #ifndef _WIN32
 	success = (setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) != -1);
+    #else
+    success = (setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,(char*)&yes,sizeof(int)) != 0);
+    #endif
 
 	if (!success)
 	{
 		printf("n'a pas pu permettre la reutilisation de socket\n");
+		#ifndef _WIN32
 		perror("setsockopt");
-	}
+	    #endif
+    }
 	return success;
 }
 
@@ -194,7 +201,7 @@ struct sockaddr_in* network_make_address(char* host, char* port)
 {
 	struct hostent      *he;
 	struct sockaddr_in*  addr=NULL; //NULL : resultat si echec
-	int i_port;
+    int i_port;
 	char host2[15];
 
 	//on réécrit host 
@@ -210,17 +217,20 @@ struct sockaddr_in* network_make_address(char* host, char* port)
 	if (!he || !port)
 	{
 		printf("make_addr : mauvaise adresse ou port : %s:%s\n",host,port);
+		#ifndef _WIN32
 		herror("gethostbyname");
-	}
+	    #endif
+    }
 	//si pas eu de problème pour trouver une correspondance aux adresse:port données
 	else
 	{
 		//allocation et remplissage avec des zéros
 		addr = (struct sockaddr_in*)calloc(1,sizeof(struct sockaddr_in));
+
 		
 		//remplissage des champs
 		//Remarque : prend la première adresse dans la liste des adresses proposées pour l'hôte
-		addr->sin_addr = *((struct in_addr *)he->h_addr);
+		addr->sin_addr = *((struct in_addr *)he->h_addr); //in_addr existe sous windows
 		addr->sin_port = htons(i_port);
 		addr->sin_family = AF_INET;
 	}
@@ -315,7 +325,7 @@ int network_send(t_packet* packet)
 		while(total < PACKET_SIZE)
 		{
 			//n prend ce que retourne send : le nombre bits envoyés avec succès
-			n = send(_net->client.socket,packet+total,PACKET_SIZE-total,0);
+			n = send(_net->client.socket,(char*)packet+total,PACKET_SIZE-total,0);
 			//si erreur dans l'envoi
 			success = (n!=-1);
 			if(!success)
@@ -344,7 +354,7 @@ void* network_receive(void* on_recv)
 	{
 		data = (t_packet*)calloc(1,PACKET_SIZE);
 		//recoit une donnée et l'écrit dans *data; MSG_WAITALL force l'attente que toute la taille précisée ait été reçue
-		recv_return = recv(_net->client.socket,data,PACKET_SIZE,MSG_WAITALL);
+		recv_return = recv(_net->client.socket,(char*)data,PACKET_SIZE,0);
 		//appel du callback en lui envoyant la donnée qu'on vient de recevoir
 		//on doit caster le pointeur en pointeur sur fonction pour pouvoir l'utiliser
 		//si recv a reçu quelque chose != 0 (pas une déconnection du client distant)
@@ -424,6 +434,10 @@ int network_server_run(char* port)
 	//attention : c'est un pointeur !
 	struct sockaddr_in* local_addr;
 	int yes=1; // pour setsockopt
+	#ifdef _WIN32
+	WSADATA WSAData;
+    WSAStartup(MAKEWORD(2,0), &WSAData);
+    #endif
 	//succes dans l'exécution du programme
 	int success;
 
@@ -438,12 +452,18 @@ int network_server_run(char* port)
 		//support IPV4 seulement
 		local_sockfd = socket(PF_INET,SOCK_STREAM,0);
 		
+		#ifdef _WIN32
+        success = (local_sockfd != INVALID_SOCKET);
+        #else
 		success = (local_sockfd != 0);
-		//si erreur d'ouverture de socket
+		#endif
+        //si erreur d'ouverture de socket
 		if(!success)
 		{
-			printf("network_server_run : erreur d'ouverture de socket\n");	
+			printf("network_server_run : erreur d'ouverture de socket\n");
+            #ifndef _WIN32
 			perror("socket");
+			#endif
 		}
 		//sinon
 		else
@@ -512,19 +532,14 @@ int network_client_shutdown()
 	{
 		printf("network_client_shutdown : _net->client.state == NETWORK_OPEN : client potentiellement lance\n");
 		network_connection_close(&(_net->server));
-		//regarde si le thread qui a pu se lancer s'est terminé (on suppose dans ce cas que c'est le thread network_server_accept)
-		success = !pthread_tryjoin_np(_pid,NULL);
-		//si le thread ne s'est pas terminé
-		if(!success)
-		{
-			printf("network_client_shutdown : network_server_accept pas termine; fermeture forcee\n");
-			kill(_pid,SIGTERM);
-		}
-		else
-			printf("network_client_shutdown : pas de thread lance. Pas de fermeture de thread\n");
-	}
-	else
-		printf("network_client_shutdown : pas de serveur lance detecte\n");
+
+		printf("network_client_shutdown : network_server_accept pas termine; fermeture forcee\n");
+		#ifndef _WIN32
+        kill(_pid,SIGTERM);
+	    #else
+	    pthread_kill(_pid,SIGTERM);
+	    #endif
+     }
 	return success;
 }
 
@@ -540,19 +555,14 @@ int network_server_shutdown()
 		printf("network_server_shutdown : _net->im_server VRAI : serveur potentiellement lance\n");
 		_net->im_server = FALSE;
 		network_connection_close(&(_net->server));
-		//regarde si le thread qui a pu se lancer s'est terminé (on suppose dans ce cas que c'est le thread network_server_accept)
-		success = pthread_tryjoin_np(_pid,NULL); // ! car la valeur est 0 pour vrai
-		//si le thread ne s'est pas terminé
-		if(!success)
-		{
+
 			printf("network_server_shutdown : network_server_accept pas termine; fermeture forcee\n");
-			kill(_pid,SIGTERM);
-		}
-		else
-			printf("network_server_shutdown : pas de thread lance. Pas de fermeture de thread\n");
-	}
-	else
-		printf("network_server_shutdown : pas de serveur lance detecte\n");
+			#ifndef _WIN32
+            kill(_pid,SIGTERM);
+		    #else
+		    pthread_kill(_pid,SIGTERM);
+		    #endif
+}
 	return success;
 }
 
@@ -584,7 +594,7 @@ void* network_server_accept(void * none)
 		//attend des connection, une fois une trouvée, 
 			//crée un socket connecté, retourne son file descripteur->remote_sockfd, remplit l'adresse
 		printf("network_server_accept : accepting connections\n");
-		remote_sockfd = accept(_net->server.socket,(struct sockaddr*)remote_addr,(socklen_t*)&remote_addr_size);
+		remote_sockfd = accept(_net->server.socket,(struct sockaddr*)remote_addr,&remote_addr_size);
 		
 		//si la connection qui devait s'établir a échoué
 		success = (remote_sockfd != -1);
