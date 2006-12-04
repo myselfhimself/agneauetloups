@@ -10,6 +10,18 @@ t_wordlist *get_themes_files(char *extension)
 	
 	sprintf(path,"cd %s/themes",PATH);
 	system(path);
+	/** - envoie une commande systeme pour stocker dans fichiers.list la liste des fichiers avec l'extension char *extension\n
+	* - ouvre le fichier fichiers.list\n
+	* - stock l'emsemble du fichier dans un fuvver, et compte le nombre de mots\n
+	* - ferme le fichier\n
+	* - alloue le nombre de mots comptés\n
+	* - ferme le fichier fichiers.list
+	* - parcours le buffer\n
+	* -# ajoute dans le buffer2 chaque caractère\n
+	* -# si fin de mot alors allocation a la taille, copie du buffer2 dans la structure, puis reset du buffer2\n
+	* - supprime le fichier fichiers.list\n
+	* - retourne la structure t_wordlist *\n
+	*/
 	if(OPERATING_SYSTEM == WINDOWS)
 	{
 		sprintf(command,"dir /B /A:-D themes\\*.%s > fichiers.list",extension);

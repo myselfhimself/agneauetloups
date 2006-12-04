@@ -110,7 +110,7 @@
 * Contient les fonctions non pr�entes/utiles en version finale
 */
 
-/** \file save_load.c
+/** \file load_save.c
 *  \brief Contient les fonctions de sauvegarde et chargement
 *
 * Contient les fonctions de chargement, de sauvegarde, et les callbacks qui redirigent dessus
@@ -120,6 +120,12 @@
 *  \brief Contient les fonctions pour la gestion des themes
 *
 * Contient les fonctions de création de la fenetre des themes, le callback de l'affichage, le callback du masquage, la fonction de l'aperçu et la fonction d'activation
+*/
+
+/** \file dir.c
+*  \brief Contient la fonction pour chercher des fichiers
+*
+* Contient la fonction qui récupère les noms de fichiers en fonction de leur extension (.theme ici)
 */
 
 #endif
