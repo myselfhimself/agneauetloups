@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
   
   //game_init(&game,table,"Joe",HUMAN,WOLF,"Bob",HUMAN,LAMB);
   //game_init(&game,table,"ooo",HUMAN,LAMB,"eee",HUMAN,WOLF);
-  load_game(&game,table,"save.ece");
+  load_game(&game,table);
   /*button = gtk_button_new_with_label("back");
   gtk_table_attach_defaults(GTK_TABLE(table),button,10,11,9,10);
   g_signal_connect(button,"clicked",GTK_SIGNAL_FUNC(go_back),game);*/
